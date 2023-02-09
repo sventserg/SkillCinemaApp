@@ -1,0 +1,20 @@
+package com.example.skillcinema.data.dto
+
+import com.example.skillcinema.data.*
+import com.example.skillcinema.entity.StaffProfessionKey
+
+
+enum class StaffProfessionKeyDto(override val key: String): StaffProfessionKey {
+    WRITER(PROFESSION_KEY_WRITER),
+    OPERATOR(PROFESSION_KEY_OPERATOR),
+    EDITOR(PROFESSION_KEY_EDITOR),
+    COMPOSER(PROFESSION_KEY_COMPOSER),
+    PRODUCER_USSR(PROFESSION_KEY_PRODUCER_USSR),
+    TRANSLATOR(PROFESSION_KEY_TRANSLATOR),
+    DIRECTOR(PROFESSION_KEY_DIRECTOR),
+    DESIGN(PROFESSION_KEY_DESIGN),
+    PRODUCER(PROFESSION_KEY_PRODUCER),
+    ACTOR(PROFESSION_KEY_ACTOR),
+    VOICE_DIRECTOR(PROFESSION_KEY_VOICE_DIRECTOR),
+    UNKNOWN(PROFESSION_KEY_UNKNOWN)
+}

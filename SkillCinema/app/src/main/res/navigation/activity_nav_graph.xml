@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_nav_graph"
+    app:startDestination="@id/onBoardingPageFragment">
+
+    <fragment
+        android:id="@+id/mainFragment2"
+        android:name="com.example.skillcinema.presentation.fragment.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/onBoardingPageFragment"
+        android:name="com.example.skillcinema.presentation.fragment.OnBoardingPageFragment"
+        android:label="OnBoardingPageFragment" >
+        <action
+            android:id="@+id/action_onBoardingPageFragment_to_mainFragment2"
+            app:destination="@id/mainFragment2"
+            app:popUpTo="@id/onBoardingPageFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

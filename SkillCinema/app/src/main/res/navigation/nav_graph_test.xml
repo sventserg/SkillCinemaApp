@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph_test"
+    app:startDestination="@id/homepageFragment2">
+
+    <fragment
+        android:id="@+id/homepageFragment2"
+        android:name="com.example.skillcinema.presentation.fragment.HomepageFragment"
+        android:label="HomepageFragment" >
+        <action
+            android:id="@+id/action_homepageFragment2_to_movieListPageFragment2"
+            app:destination="@id/movieListPageFragment" />
+        <action
+            android:id="@+id/action_homepageFragment2_to_moviePageFragment22"
+            app:destination="@id/moviePageFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieListPageFragment"
+        android:name="com.example.skillcinema.presentation.fragment.MovieListPageFragment"
+        android:label="MovieListPageFragment" >
+        <action
+            android:id="@+id/action_movieListPageFragment_to_homepageFragment22"
+            app:destination="@id/homepageFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/moviePageFragment2"
+        android:name="com.example.skillcinema.presentation.fragment.MoviePageFragment"
+        android:label="MoviePageFragment" >
+        <action
+            android:id="@+id/action_moviePageFragment2_to_movieListPageFragment2"
+            app:destination="@id/movieListPageFragment" />
+        <action
+            android:id="@+id/action_moviePageFragment2_to_homepageFragment22"
+            app:destination="@id/homepageFragment2" />
+        <action
+            android:id="@+id/action_moviePageFragment2_to_homepageFragment23"
+            app:destination="@id/homepageFragment2" />
+    </fragment>
+</navigation>

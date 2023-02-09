@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+
+    <TextView
+        android:id="@+id/movieListName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        app:layout_constraintHorizontal_bias="0"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/forwardButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Премьеры" />
+
+    <LinearLayout
+        android:id="@+id/forwardButton"
+        android:layout_width="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="bottom"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        app:layout_constraintBottom_toBottomOf="@id/movieListName"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/allTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:layout_marginEnd="9dp"
+            android:textColor="@color/alternativeTextColor"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/movieListName"
+            app:layout_constraintEnd_toStartOf="@+id/nextButton"
+            tools:text="Все" />
+
+        <ImageView
+            android:id="@+id/nextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end|bottom"
+            android:src="@drawable/mp_next_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/allTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/allTextView" />
+
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/movieListContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movieListName"
+        app:spanCount="1" />
+
+</merge>

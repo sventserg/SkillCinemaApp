@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="120dp"
+    android:layout_height="160dp"
+    android:layout_gravity="top">
+
+    <LinearLayout
+        android:id="@+id/forwardButton"
+        android:layout_width="120dp"
+        android:layout_height="160dp"
+        android:background="@drawable/last_card_background"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/white_circle" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="8dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/arrow" />
+
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="@string/show_all"
+            android:textSize="12sp" />
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="false">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        style="@style/Theme.SkillCinema.TransparentActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="false">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            app:contentScrim="?attr/colorPrimaryVariant"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:statusBarScrim="@android:color/transparent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/moviePoster"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="@+id/layoutMovieDescription"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/home_icon" />
+
+            <LinearLayout
+                android:id="@+id/layoutMovieDescription"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/mp_gradient"
+                android:gravity="center|bottom"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/movieInformation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/movieLogo"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:padding="20dp"
+                        android:scaleType="fitCenter" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/kinopoiskRating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:textColor="@color/movie_page_description_color"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            tools:text="8.3" />
+
+                        <TextView
+                            android:id="@+id/movieName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/movie_page_description_color"
+                            android:textSize="12sp"
+                            tools:text="Название" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/descriptionSecondLine"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:textColor="@color/movie_page_description_color"
+                        android:textSize="12sp"
+                        tools:text="2020, драма, приключения" />
+
+                    <TextView
+                        android:id="@+id/descriptionThirdLine"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:textColor="@color/movie_page_description_color"
+                        android:textSize="12sp"
+                        tools:text="Россия, 1 ч 33 мин, 16+" />
+
+                    <LinearLayout
+                        android:id="@+id/buttons"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/favoriteIcon"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/heart_off" />
+
+                        <ImageView
+                            android:id="@+id/wantToWatchIcon"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="26dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_baseline_turned_in_not_24" />
+
+                        <ImageView
+                            android:id="@+id/notWatchedIcon"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="26dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/mp_not_watched_icon" />
+
+                        <ImageView
+                            android:id="@+id/shareIcon"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="26dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/mp_share_icon" />
+
+                        <ImageView
+                            android:id="@+id/addMovieToCollectionIcon"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="26dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/mp_more_settings_icon" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/back_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/noConnectionLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="50dp"
+                    android:text="@string/no_connection"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/noConnectionButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:backgroundTint="@color/selectedElementBackground"
+                    app:cornerRadius="10dp"
+                    android:text="@string/refresh_page"
+                    android:textColor="@color/selectedTextColor" />
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/slogan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:paddingStart="26dp"
+                    android:paddingEnd="26dp"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Слоган" />
+
+                <TextView
+                    android:id="@+id/shortDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:paddingStart="26dp"
+                    android:paddingEnd="26dp"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/slogan"
+                    tools:text="Короткое описание" />
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:clickable="true"
+                    android:ellipsize="end"
+                    android:focusable="true"
+                    android:paddingStart="26dp"
+                    android:paddingEnd="26dp"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/shortDescription"
+                    tools:text="Описание" />
+
+                <LinearLayout
+                    android:id="@+id/generalLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/description">
+
+                    <com.example.skillcinema.presentation.custom.MovieInformationTextLine
+                        android:id="@+id/serialInformation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="26dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginEnd="26dp"
+                        app:listName="@string/seasons_and_series" />
+
+                    <TextView
+                        android:id="@+id/episodesText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="26dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="26dp"
+                        android:textColor="@color/secondaryTextColor"
+                        android:textSize="12sp"
+                        tools:text="1 сезон, 7 серий" />
+
+                    <com.example.skillcinema.presentation.custom.MovieInformationTextLine
+                        android:id="@+id/actorsInformation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="26dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginEnd="26dp"
+                        app:listName="@string/movie_actors" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/actors"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:nestedScrollingEnabled="false"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="4" />
+
+                    <com.example.skillcinema.presentation.custom.MovieInformationTextLine
+                        android:id="@+id/workersInformation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="26dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginEnd="26dp"
+                        app:listName="@string/movie_workers" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/workers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:nestedScrollingEnabled="false"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="2" />
+
+                    <com.example.skillcinema.presentation.custom.MovieInformationTextLine
+                        android:id="@+id/galleryInformation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="26dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginEnd="26dp"
+                        app:listName="@string/gallery" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/gallery"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="1" />
+
+                    <com.example.skillcinema.presentation.custom.MovieInformationTextLine
+                        android:id="@+id/similarMoviesInformation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="26dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginEnd="26dp"
+                        app:listName="@string/similar_movies" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/similarMovies"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="26dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="1" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+

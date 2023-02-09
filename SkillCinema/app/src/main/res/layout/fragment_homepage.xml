@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRefresh"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ScrollView
+        android:id="@+id/allInformation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:context=".presentation.fragment.HomepageFragment">
+
+            <LinearLayout
+                android:id="@+id/noConnectionLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/noConnectionText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:gravity="center"
+                    android:text="@string/no_connection"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="16sp" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="200dp"
+                    android:layout_height="200dp"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/no_connection_rex" />
+
+            </LinearLayout>
+
+            <com.example.skillcinema.presentation.custom.MovieListView
+                android:id="@+id/premieres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                app:movieListName="@string/premieres" />
+
+            <com.example.skillcinema.presentation.custom.MovieListView
+                android:id="@+id/popularMovies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                app:movieListName="@string/popular" />
+
+            <com.example.skillcinema.presentation.custom.MovieListView
+                android:id="@+id/bestMovies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                app:movieListName="@string/top_250" />
+
+            <com.example.skillcinema.presentation.custom.MovieListView
+                android:id="@+id/TVSeries"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                app:movieListName="@string/tv_series" />
+
+            <com.example.skillcinema.presentation.custom.MovieListView
+                android:id="@+id/miniSeries"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                app:movieListName="@string/mini_series" />
+
+            <com.example.skillcinema.presentation.custom.MovieListView
+                android:id="@+id/firstRandomList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp" />
+
+            <com.example.skillcinema.presentation.custom.MovieListView
+                android:id="@+id/secondRandomList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:layout_marginBottom="35dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
