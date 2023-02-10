@@ -2,10 +2,10 @@ package com.example.skillcinema.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.skillcinema.data.NO_MOVIE_ID
-import com.example.skillcinema.domain.GetMonthName
-import com.example.skillcinema.domain.LoadMovieData
-import com.example.skillcinema.domain.LoadMovieList
-import com.example.skillcinema.domain.RandomFilter
+import com.example.skillcinema.domain.GetMonthNameUseCase
+import com.example.skillcinema.domain.LoadMovieDataUseCase
+import com.example.skillcinema.domain.LoadMovieListUseCase
+import com.example.skillcinema.domain.GetRandomFilterUseCase
 import com.example.skillcinema.entity.Country
 import com.example.skillcinema.entity.Genre
 import com.example.skillcinema.entity.Movie
@@ -16,10 +16,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import java.util.*
 
 class HomepageViewModel(
-    private val loadMovieList: LoadMovieList,
-    private val getMonthName: GetMonthName,
-    private val randomFilter: RandomFilter,
-    private val loadMovieData: LoadMovieData
+    private val loadMovieList: LoadMovieListUseCase,
+    private val getMonthName: GetMonthNameUseCase,
+    private val randomFilter: GetRandomFilterUseCase,
+    private val loadMovieData: LoadMovieDataUseCase
 ) : ViewModel() {
 
     private val _isMovieListsLoaded = MutableStateFlow(false)

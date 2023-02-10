@@ -1,14 +1,10 @@
 package com.example.skillcinema.data.repository
 
 import android.util.Log
-import com.example.skillcinema.data.dto.MovieListDto
 import com.example.skillcinema.data.dto.SeasonsDto
-import com.example.skillcinema.data.retrofit.LoadMovieListRetrofit
 import com.example.skillcinema.data.retrofit.LoadSeasonsRetrofit
-import com.example.skillcinema.entity.MovieList
-import com.example.skillcinema.entity.Season
 import com.example.skillcinema.entity.Seasons
-import com.example.skillcinema.entity.data.repository.LoadSeasonsRepository
+import com.example.skillcinema.entity.repository.LoadSeasonsRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import retrofit2.Call

@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -14,7 +16,7 @@ import com.example.skillcinema.App
 import com.example.skillcinema.R
 import com.example.skillcinema.databinding.FragmentSearchBinding
 import com.example.skillcinema.entity.Movie
-import com.example.skillcinema.presentation.viewmodel.adapter.movieList.PagingMovieListAdapter
+import com.example.skillcinema.presentation.adapter.movieList.PagingMovieListAdapter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -41,6 +43,14 @@ class SearchFragment : Fragment() {
     ): View? {
         _binding = FragmentSearchBinding.inflate(inflater)
         return binding.root
+    }
+
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+        return if (enter) {
+            AnimationUtils.loadAnimation(context, com.google.android.material.R.anim.abc_fade_in)
+        } else {
+            AnimationUtils.loadAnimation(context, com.google.android.material.R.anim.abc_fade_out)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

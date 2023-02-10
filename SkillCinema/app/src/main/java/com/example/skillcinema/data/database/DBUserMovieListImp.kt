@@ -4,7 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
 import com.example.skillcinema.entity.Movie
-import com.example.skillcinema.entity.data.database.DBUserMovieList
+import com.example.skillcinema.entity.database.DBUserMovieList
 
 data class DBUserMovieListImp(
     @Embedded

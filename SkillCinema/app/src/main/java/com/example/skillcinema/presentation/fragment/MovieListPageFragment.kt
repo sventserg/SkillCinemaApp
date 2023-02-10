@@ -1,7 +1,6 @@
 package com.example.skillcinema.presentation.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,13 +14,11 @@ import com.example.skillcinema.databinding.FragmentMovieListPageBinding
 import com.example.skillcinema.entity.Movie
 import com.example.skillcinema.presentation.DEFAULT_SPACING
 import com.example.skillcinema.presentation.MOVIE_LIST_PAGE_SPACING
-import com.example.skillcinema.presentation.viewmodel.adapter.decorator.VerticalItemDecoration
-import com.example.skillcinema.presentation.viewmodel.adapter.decorator.VerticalItemDecorationTwoColumn
-import com.example.skillcinema.presentation.viewmodel.adapter.loadState.MovieLoadStateAdapter
-import com.example.skillcinema.presentation.viewmodel.adapter.movieList.PagingMovieListAdapter
+import com.example.skillcinema.presentation.decorator.VerticalItemDecorationTwoColumn
+import com.example.skillcinema.presentation.adapter.loadState.MovieLoadStateAdapter
+import com.example.skillcinema.presentation.adapter.movieList.PagingMovieListAdapter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 class MovieListPageFragment : Fragment() {
 

@@ -9,19 +9,35 @@
         android:id="@+id/homepageFragment"
         android:name="com.example.skillcinema.presentation.fragment.HomepageFragment"
         android:label="fragment_homepage"
-        tools:layout="@layout/fragment_homepage_old" >
+        tools:layout="@layout/fragment_homepage" >
         <action
             android:id="@+id/action_homepageFragment_to_moviePageFragment"
-            app:destination="@id/moviePageFragment" />
+            app:destination="@id/moviePageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_homepageFragment_to_moviesListPageFragment"
-            app:destination="@id/moviesListPageFragment" />
+            app:destination="@id/moviesListPageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_homepageFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_homepageFragment_to_profilePageFragment"
-            app:destination="@id/profilePageFragment" />
+            app:destination="@id/profilePageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/moviePageFragment"
@@ -30,22 +46,46 @@
         tools:layout="@layout/fragment_movie_page" >
         <action
             android:id="@+id/action_moviePageFragment_to_homepageFragment"
-            app:destination="@id/homepageFragment" />
+            app:destination="@id/homepageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_moviePageFragment_to_staffPersonPageFragment"
-            app:destination="@id/staffPersonPageFragment" />
+            app:destination="@id/staffPersonPageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_moviePageFragment_to_actorsFragment"
-            app:destination="@id/actorsFragment" />
+            app:destination="@id/actorsFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_moviePageFragment_to_galleryFragment"
-            app:destination="@id/galleryFragment" />
+            app:destination="@id/galleryFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_moviePageFragment_to_seasonsFragment"
-            app:destination="@id/seasonsFragment" />
+            app:destination="@id/seasonsFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_moviePageFragment_to_moviesListPageFragment"
-            app:destination="@id/moviesListPageFragment" />
+            app:destination="@id/moviesListPageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/moviesListPageFragment"
@@ -53,10 +93,18 @@
         android:label="MoviesListPageFragment" >
         <action
             android:id="@+id/action_moviesListPageFragment_to_moviePageFragment"
-            app:destination="@id/moviePageFragment" />
+            app:destination="@id/moviePageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_moviesListPageFragment_to_homepageFragment"
-            app:destination="@id/homepageFragment" />
+            app:destination="@id/homepageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/staffPersonPageFragment"
@@ -64,25 +112,45 @@
         android:label="StaffPersonPageFragment" >
         <action
             android:id="@+id/action_staffPersonPageFragment_to_moviePageFragment"
-            app:destination="@id/moviePageFragment" />
+            app:destination="@id/moviePageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_staffPersonPageFragment_to_filmographyFragment"
-            app:destination="@id/filmographyFragment" />
+            app:destination="@id/filmographyFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_staffPersonPageFragment_to_moviesListPageFragment"
-            app:destination="@id/moviesListPageFragment" />
+            app:destination="@id/moviesListPageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/actorsFragment"
-        android:name="com.example.skillcinema.presentation.fragment.ActorsFragment"
+        android:name="com.example.skillcinema.presentation.fragment.StaffListFragment"
         android:label="fragment_actors"
-        tools:layout="@layout/fragment_actors" >
+        tools:layout="@layout/fragment_staff_list" >
         <action
             android:id="@+id/action_actorsFragment_to_staffPersonPageFragment"
-            app:destination="@id/staffPersonPageFragment" />
+            app:destination="@id/staffPersonPageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_actorsFragment_to_moviePageFragment"
-            app:destination="@id/moviePageFragment" />
+            app:destination="@id/moviePageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/galleryFragment"
@@ -91,10 +159,18 @@
         tools:layout="@layout/fragment_gallery" >
         <action
             android:id="@+id/action_galleryFragment_to_moviePageFragment"
-            app:destination="@id/moviePageFragment" />
+            app:destination="@id/moviePageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_galleryFragment_to_imageScrollFragment"
-            app:destination="@id/imageScrollFragment" />
+            app:destination="@id/imageScrollFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/filmographyFragment"
@@ -103,10 +179,18 @@
         tools:layout="@layout/fragment_filmography" >
         <action
             android:id="@+id/action_filmographyFragment_to_staffPersonPageFragment"
-            app:destination="@id/staffPersonPageFragment" />
+            app:destination="@id/staffPersonPageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_filmographyFragment_to_moviePageFragment"
-            app:destination="@id/moviePageFragment" />
+            app:destination="@id/moviePageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/seasonsFragment"
@@ -115,25 +199,45 @@
         tools:layout="@layout/fragment_seasons" >
         <action
             android:id="@+id/action_seasonsFragment_to_moviePageFragment"
-            app:destination="@id/moviePageFragment" />
+            app:destination="@id/moviePageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/profilePageFragment"
-        android:name="com.example.skillcinema.presentation.fragment.ProfilePageFragment"
+        android:name="com.example.skillcinema.presentation.fragment.UserProfilePageFragment"
         android:label="fragment_profile_page"
-        tools:layout="@layout/fragment_profile_page" >
+        tools:layout="@layout/fragment_user_profile_page" >
         <action
             android:id="@+id/action_profilePageFragment_to_moviePageFragment"
-            app:destination="@id/moviePageFragment" />
+            app:destination="@id/moviePageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_profilePageFragment_to_moviesListPageFragment"
-            app:destination="@id/moviesListPageFragment" />
+            app:destination="@id/moviesListPageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_profilePageFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_profilePageFragment_to_homepageFragment"
-            app:destination="@id/homepageFragment" />
+            app:destination="@id/homepageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -142,16 +246,32 @@
         tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_searchFragment_to_moviePageFragment"
-            app:destination="@id/moviePageFragment" />
+            app:destination="@id/moviePageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_searchFragment_to_searchSettingsFragment"
-            app:destination="@id/searchSettingsFragment" />
+            app:destination="@id/searchSettingsFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_searchFragment_to_profilePageFragment"
-            app:destination="@id/profilePageFragment" />
+            app:destination="@id/profilePageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_searchFragment_to_homepageFragment"
-            app:destination="@id/homepageFragment" />
+            app:destination="@id/homepageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/searchSettingsFragment"
@@ -160,13 +280,25 @@
         tools:layout="@layout/fragment_search_settings" >
         <action
             android:id="@+id/action_searchSettingsFragment_to_searchFilterFragment"
-            app:destination="@id/searchFilterFragment" />
+            app:destination="@id/searchFilterFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_searchSettingsFragment_to_setTimePeriodFragment"
-            app:destination="@id/setTimePeriodFragment" />
+            app:destination="@id/setTimePeriodFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_searchSettingsFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/searchFilterFragment"
@@ -175,16 +307,24 @@
         tools:layout="@layout/fragment_search_filter" >
         <action
             android:id="@+id/action_searchFilterFragment_to_searchSettingsFragment"
-            app:destination="@id/searchSettingsFragment" />
+            app:destination="@id/searchSettingsFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/setTimePeriodFragment"
-        android:name="com.example.skillcinema.presentation.fragment.SetTimePeriodFragment"
+        android:name="com.example.skillcinema.presentation.fragment.TimeFilterFragment"
         android:label="fragment_set_time_period"
-        tools:layout="@layout/fragment_set_time_period" >
+        tools:layout="@layout/fragment_time_filter" >
         <action
             android:id="@+id/action_setTimePeriodFragment_to_searchSettingsFragment"
-            app:destination="@id/searchSettingsFragment" />
+            app:destination="@id/searchSettingsFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/imageScrollFragment"
@@ -192,6 +332,10 @@
         android:label="ImageScrollFragment" >
         <action
             android:id="@+id/action_imageScrollFragment_to_galleryFragment"
-            app:destination="@id/galleryFragment" />
+            app:destination="@id/galleryFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
 </navigation>

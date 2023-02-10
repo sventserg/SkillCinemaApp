@@ -3,7 +3,7 @@ package com.example.skillcinema.data.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.skillcinema.entity.data.database.DBMovie
+import com.example.skillcinema.entity.database.DBMovie
 
 @Entity(tableName = "saved_movies")
 data class DBMovieImp(

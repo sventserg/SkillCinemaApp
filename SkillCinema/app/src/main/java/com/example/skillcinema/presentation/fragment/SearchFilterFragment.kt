@@ -2,7 +2,6 @@ package com.example.skillcinema.presentation.fragment
 
 import android.os.Bundle
 import android.view.*
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -10,9 +9,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.skillcinema.App
 import com.example.skillcinema.R
 import com.example.skillcinema.databinding.FragmentSearchFilterBinding
-import com.example.skillcinema.presentation.viewmodel.SettingsFilter
-import com.example.skillcinema.presentation.viewmodel.adapter.decorator.HorizontalDividerDecoration
-import com.example.skillcinema.presentation.viewmodel.adapter.filter.MovieFilterAdapter
+import com.example.skillcinema.presentation.SettingsFilter
+import com.example.skillcinema.presentation.decorator.HorizontalDividerDecoration
+import com.example.skillcinema.presentation.adapter.filter.MovieFilterAdapter
 
 
 class SearchFilterFragment : Fragment() {

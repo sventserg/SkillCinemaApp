@@ -13,91 +13,91 @@ class DomainModule {
 
     @Singleton
     @Provides
-    fun provideLoadMovieList(): LoadMovieList {
-        return LoadMovieList(LoadMovieListRepositoryImp())
+    fun provideLoadMovieList(): LoadMovieListUseCase {
+        return LoadMovieListUseCase(LoadMovieListRepositoryImp())
     }
 
     @Singleton
     @Provides
-    fun provideLoadApiFilters(): LoadApiFilters {
-        return LoadApiFilters(LoadApiFiltersRepositoryImp())
+    fun provideLoadApiFilters(): LoadApiFiltersUseCase {
+        return LoadApiFiltersUseCase(LoadApiFiltersRepositoryImp())
     }
 
     @Singleton
     @Provides
-    fun provideGetMonthName(): GetMonthName {
-        return GetMonthName()
+    fun provideGetMonthName(): GetMonthNameUseCase {
+        return GetMonthNameUseCase()
     }
 
     @Singleton
     @Provides
-    fun provideRandomFilter(): RandomFilter {
-        return RandomFilter()
+    fun provideRandomFilter(): GetRandomFilterUseCase {
+        return GetRandomFilterUseCase()
     }
 
     @Singleton
     @Provides
-    fun provideLoadMovieData(): LoadMovieData {
-        return LoadMovieData(LoadMovieDataRepositoryImp())
+    fun provideLoadMovieData(): LoadMovieDataUseCase {
+        return LoadMovieDataUseCase(LoadMovieDataRepositoryImp())
     }
 
     @Singleton
     @Provides
-    fun provideGetFilteredStaff(): GetFilteredStaff {
-        return GetFilteredStaff()
+    fun provideGetFilteredStaff(): GetFilteredStaffUseCase {
+        return GetFilteredStaffUseCase()
     }
 
     @Singleton
     @Provides
-    fun provideLoadPerson(): LoadPerson {
-        return LoadPerson(LoadPersonRepositoryImp())
+    fun provideLoadPerson(): LoadPersonUseCase {
+        return LoadPersonUseCase(LoadPersonRepositoryImp())
+    }
+
+//    @Singleton
+//    @Provides
+//    fun provideMovieRatingSorter(): MovieRatingSorter {
+//        return MovieRatingSorter()
+//    }
+
+    @Singleton
+    @Provides
+    fun provideMovieImage(): LoadMovieImageUseCase {
+        return LoadMovieImageUseCase(LoadMovieImageRepositoryImp())
     }
 
     @Singleton
     @Provides
-    fun provideMovieRatingSorter(): MovieRatingSorter {
-        return MovieRatingSorter()
+    fun provideGetSortedMovieList(): GetSortedMovieListUseCase {
+        return GetSortedMovieListUseCase()
     }
 
     @Singleton
     @Provides
-    fun provideMovieImage(): LoadMovieImage {
-        return LoadMovieImage(LoadMovieImageRepositoryImp())
+    fun provideLoadSeasons(): LoadSeasonsUseCase {
+        return LoadSeasonsUseCase(LoadSeasonsRepositoryImp())
     }
 
     @Singleton
     @Provides
-    fun provideGetSortedMovieList(): GetSortedMovieList {
-        return GetSortedMovieList()
+    fun provideGetAppPreferences(context: Context): GetAppPreferencesUseCase {
+        return GetAppPreferencesUseCase(AppPreferencesRepositoryImp(context))
     }
 
     @Singleton
     @Provides
-    fun provideLoadSeasons(): LoadSeasons {
-        return LoadSeasons(LoadSeasonsRepositoryImp())
+    fun provideSeriesCalculation(context: Context): GetEpisodesNumberUseCase {
+        return GetEpisodesNumberUseCase(context)
     }
 
     @Singleton
     @Provides
-    fun provideGetAppPreferences(context: Context): GetAppPreferences {
-        return GetAppPreferences(AppPreferencesRepositoryImp(context))
+    fun provideSearch(): SearchUseCase {
+        return SearchUseCase(SearchRepositoryImp())
     }
 
     @Singleton
     @Provides
-    fun provideSeriesCalculation(context: Context): SeriesCalculation {
-        return SeriesCalculation(context)
-    }
-
-    @Singleton
-    @Provides
-    fun provideSearch(): Search {
-        return Search(SearchRepositoryImp())
-    }
-
-    @Singleton
-    @Provides
-    fun provideDatabase(repository: DatabaseRepositoryImp): Database {
-        return Database(repository)
+    fun provideDatabase(repository: DatabaseRepositoryImp): DatabaseUseCase {
+        return DatabaseUseCase(repository)
     }
 }

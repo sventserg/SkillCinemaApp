@@ -1,8 +1,8 @@
 package com.example.skillcinema.data.repository
 
 import android.content.Context
-import com.example.skillcinema.data.storage.AppPreferences
-import com.example.skillcinema.entity.data.repository.AppPreferencesRepository
+import com.example.skillcinema.data.preferences.AppPreferences
+import com.example.skillcinema.entity.repository.AppPreferencesRepository
 
 class AppPreferencesRepositoryImp(private val context: Context) : AppPreferencesRepository {
     private val appReferences = AppPreferences(context)

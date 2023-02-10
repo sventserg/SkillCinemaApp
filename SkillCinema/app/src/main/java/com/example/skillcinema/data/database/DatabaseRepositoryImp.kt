@@ -1,10 +1,10 @@
 package com.example.skillcinema.data.database
 
 import com.example.skillcinema.entity.Movie
-import com.example.skillcinema.entity.data.database.DBMovie
-import com.example.skillcinema.entity.data.database.DBMovieList
-import com.example.skillcinema.entity.data.database.DBUserMovieList
-import com.example.skillcinema.entity.data.database.DatabaseRepository
+import com.example.skillcinema.entity.database.DBMovie
+import com.example.skillcinema.entity.database.DBMovieList
+import com.example.skillcinema.entity.database.DBUserMovieList
+import com.example.skillcinema.entity.repository.DatabaseRepository
 
 class DatabaseRepositoryImp(private val dbStorage: DatabaseStorage) : DatabaseRepository {
 

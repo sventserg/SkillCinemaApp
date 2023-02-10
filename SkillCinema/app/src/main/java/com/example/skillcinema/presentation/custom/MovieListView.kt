@@ -5,12 +5,10 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.example.skillcinema.R
-import com.example.skillcinema.databinding.MovieListPreviewBinding
-import com.example.skillcinema.presentation.viewmodel.adapter.movieList.MovieListAdapter
+import com.example.skillcinema.databinding.CustomMovieListViewBinding
+import com.example.skillcinema.presentation.adapter.movieList.MovieListAdapter
 
 class MovieListView @JvmOverloads constructor(
     context: Context,
@@ -19,12 +17,12 @@ class MovieListView @JvmOverloads constructor(
     defStyleRes: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr, defStyleRes) {
 
-    private val binding: MovieListPreviewBinding
+    private val binding: CustomMovieListViewBinding
 
     init {
         val inflater = LayoutInflater.from(context)
-        inflater.inflate(R.layout.movie_list_preview, this, true)
-        binding = MovieListPreviewBinding.bind(this)
+        inflater.inflate(R.layout.custom_movie_list_view, this, true)
+        binding = CustomMovieListViewBinding.bind(this)
         attributesInit(attrs, defStyleAttr, defStyleRes)
     }
 

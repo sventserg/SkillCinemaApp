@@ -4,7 +4,7 @@ import android.util.Log
 import com.example.skillcinema.data.dto.PersonDto
 import com.example.skillcinema.data.retrofit.LoadPersonRetrofit
 import com.example.skillcinema.entity.Person
-import com.example.skillcinema.entity.data.repository.LoadPersonRepository
+import com.example.skillcinema.entity.repository.LoadPersonRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import retrofit2.Call
@@ -40,7 +40,7 @@ class LoadPersonRepositoryImp : LoadPersonRepository {
         while (!personIsLoaded) {
             delay(100)
         }
-        personIsLoaded = true
+        personIsLoaded = false
         return person.value
     }
 

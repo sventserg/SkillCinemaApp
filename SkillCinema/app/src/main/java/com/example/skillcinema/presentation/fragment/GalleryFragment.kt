@@ -1,13 +1,10 @@
 package com.example.skillcinema.presentation.fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.size
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.skillcinema.App
 import com.example.skillcinema.R
@@ -16,10 +13,9 @@ import com.example.skillcinema.data.MovieImageTypeList
 import com.example.skillcinema.databinding.FragmentGalleryBinding
 import com.example.skillcinema.databinding.TabItemBinding
 import com.example.skillcinema.entity.MovieImageType
-import com.example.skillcinema.presentation.fragment.VPFragment.ImageListFragment
-import com.example.skillcinema.presentation.viewmodel.adapter.viewPager.ImageVPAdapter
+import com.example.skillcinema.presentation.fragment.view_pager.ImageListFragment
+import com.example.skillcinema.presentation.adapter.viewPager.ImageVPAdapter
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.coroutines.launch
 
 
 class GalleryFragment : Fragment() {

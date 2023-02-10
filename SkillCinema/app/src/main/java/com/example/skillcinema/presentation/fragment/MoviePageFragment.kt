@@ -6,18 +6,13 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.MarginLayoutParams
-import android.view.WindowManager
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.marginBottom
-import androidx.core.view.updateLayoutParams
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -34,11 +29,11 @@ import com.example.skillcinema.entity.Staff
 import com.example.skillcinema.presentation.DEFAULT_SPACING
 import com.example.skillcinema.presentation.START_END_MARGIN
 import com.example.skillcinema.presentation.fragment.bottom.AddMovieToCollectionFragment
-import com.example.skillcinema.presentation.viewmodel.MovieCollectionType
-import com.example.skillcinema.presentation.viewmodel.adapter.decorator.HorizontalItemDecoration
-import com.example.skillcinema.presentation.viewmodel.adapter.movieImage.MovieImageAdapter
-import com.example.skillcinema.presentation.viewmodel.adapter.movieList.MovieListAdapter
-import com.example.skillcinema.presentation.viewmodel.adapter.staff.StaffAdapter
+import com.example.skillcinema.presentation.MovieCollectionType
+import com.example.skillcinema.presentation.decorator.HorizontalItemDecoration
+import com.example.skillcinema.presentation.adapter.movieImage.MovieImageAdapter
+import com.example.skillcinema.presentation.adapter.movieList.MovieListAdapter
+import com.example.skillcinema.presentation.adapter.staff.StaffAdapter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
@@ -56,8 +51,6 @@ class MoviePageFragment : Fragment() {
     private fun isRunning(): Boolean {
         return currentAnimationState != IDLE_ANIMATION_STATE
     }
-
-//    private var isItPageUpdate = false
 
     companion object {
         private const val DESCRIPTION_MAX_LINES = 5
@@ -88,7 +81,6 @@ class MoviePageFragment : Fragment() {
             )
         )
     }
-
 
     private fun onGalleryImageClick(image: MovieImage) {
         val dialog = Dialog(requireContext())
@@ -141,6 +133,8 @@ class MoviePageFragment : Fragment() {
         val dialogBinding = DialogLoadingBinding.inflate(layoutInflater)
         dialog.setContentView(dialogBinding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(false)
 
         dialog.show()
         binding.mainContainer.visibility = View.GONE

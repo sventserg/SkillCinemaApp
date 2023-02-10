@@ -7,15 +7,14 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [DataModule::class, DomainModule::class, PresentationModule::class])
 interface AppComponent {
-    fun homepageVM(): HomepageVM
     fun homepageViewModel(): HomepageViewModel
-    fun movieListPageVM(): MovieListPageVM
+    fun movieListPageVM(): MovieListPageViewModel
     fun mainViewModel(): MainViewModel
-    fun moviePageVM(): MoviePageVM
-    fun staffPersonVM(): StaffPersonVM
-    fun galleryVM(): GalleryVM
-    fun filmographyVM(): FilmographyVM
-    fun profilePageVM(): ProfilePageVM
-    fun searchPageVM(): SearchPageVM
+    fun moviePageVM(): MoviePageViewModel
+    fun staffPersonVM(): StaffPersonViewModel
+    fun galleryVM(): GalleryViewModel
+    fun filmographyVM(): FilmographyViewModel
+    fun profilePageVM(): ProfilePageViewModel
+    fun searchPageVM(): SearchPageViewModel
     fun databaseViewModel(): DatabaseViewModel
 }

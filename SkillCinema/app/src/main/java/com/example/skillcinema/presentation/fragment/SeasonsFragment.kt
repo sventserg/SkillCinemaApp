@@ -7,12 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.skillcinema.App
 import com.example.skillcinema.R
-import com.example.skillcinema.databinding.ChipBinding
 import com.example.skillcinema.databinding.FragmentSeasonsBinding
 import com.example.skillcinema.databinding.TabItemBinding
-import com.example.skillcinema.presentation.fragment.VPFragment.EpisodesFragment
-import com.example.skillcinema.presentation.viewmodel.adapter.viewPager.VPAdapter
-import com.google.android.material.chip.Chip
+import com.example.skillcinema.presentation.fragment.view_pager.EpisodesFragment
+import com.example.skillcinema.presentation.adapter.viewPager.VPAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
 

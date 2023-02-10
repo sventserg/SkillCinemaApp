@@ -17,6 +17,10 @@
         <action
             android:id="@+id/action_onBoardingPageFragment_to_mainFragment2"
             app:destination="@id/mainFragment2"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out"
             app:popUpTo="@id/onBoardingPageFragment"
             app:popUpToInclusive="true" />
     </fragment>

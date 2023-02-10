@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,11 +21,10 @@ import com.example.skillcinema.databinding.FragmentHomepageBinding
 import com.example.skillcinema.entity.Country
 import com.example.skillcinema.entity.Genre
 import com.example.skillcinema.entity.Movie
-import com.example.skillcinema.presentation.DEFAULT_SPACING
-import com.example.skillcinema.presentation.START_END_MARGIN
-import com.example.skillcinema.presentation.viewmodel.*
-import com.example.skillcinema.presentation.viewmodel.adapter.decorator.HorizontalItemDecoration
-import com.example.skillcinema.presentation.viewmodel.adapter.movieList.MovieListAdapter
+import com.example.skillcinema.presentation.*
+import com.example.skillcinema.presentation.decorator.HorizontalItemDecoration
+import com.example.skillcinema.presentation.adapter.movieList.MovieListAdapter
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -73,11 +74,9 @@ class HomepageFragment : Fragment() {
             homepageViewModel.firstFilteredMovies.value == emptyList<Movie>() &&
             homepageViewModel.secondFilteredMovies.value == emptyList<Movie>()
         ) {
-            Log.d("TAG" , " TRUE ${homepageViewModel.premieres.value.isEmpty()}")
             binding.noConnectionLayout.visibility = View.VISIBLE
 //            binding.allInformation.visibility = View.GONE
         } else {
-            Log.d("TAG" , "FALSE ${homepageViewModel.premieres.value.isEmpty()}")
             binding.noConnectionLayout.visibility = View.GONE
 //            binding.allInformation.visibility = View.VISIBLE
         }
@@ -183,7 +182,17 @@ class HomepageFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+        return if (enter) {
+            AnimationUtils.loadAnimation(context, com.google.android.material.R.anim.abc_fade_in)
+        } else {
+            AnimationUtils.loadAnimation(context, com.google.android.material.R.anim.abc_fade_out)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        binding.allInformation.visibility = View.GONE
 
         val margin = (resources.displayMetrics.scaledDensity * START_END_MARGIN).toInt()
         val spacing = (resources.displayMetrics.scaledDensity * DEFAULT_SPACING).toInt()
@@ -197,9 +206,12 @@ class HomepageFragment : Fragment() {
         val dialogBinding = DialogLoadingBinding.inflate(layoutInflater)
         dialog.setContentView(dialogBinding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(false)
 
         homepageViewModel.isMovieListsLoaded.onEach {
             if (it) {
+                delay(250)
                 dialog.dismiss()
                 binding.allInformation.visibility = View.VISIBLE
             } else {

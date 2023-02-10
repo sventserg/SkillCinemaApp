@@ -9,13 +9,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.skillcinema.App
 import com.example.skillcinema.R
-import com.example.skillcinema.databinding.CenterTabItemBinding
 import com.example.skillcinema.databinding.FragmentSearchSettingsBinding
-import com.example.skillcinema.databinding.LeftTabItemBinding
-import com.example.skillcinema.databinding.RightTabItemBinding
 import com.example.skillcinema.presentation.*
-import com.example.skillcinema.presentation.viewmodel.SettingsFilter
-import kotlinx.coroutines.flow.collect
+import com.example.skillcinema.presentation.SettingsFilter
 import kotlinx.coroutines.launch
 
 class SearchSettingsFragment : Fragment() {

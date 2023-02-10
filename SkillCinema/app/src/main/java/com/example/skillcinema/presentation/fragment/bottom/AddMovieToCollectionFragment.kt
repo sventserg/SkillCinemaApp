@@ -8,17 +8,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.view.WindowManager
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.skillcinema.R
+import com.example.skillcinema.databinding.BottomFragmentAddMovieBinding
 import com.example.skillcinema.databinding.DialogErrorBinding
 import com.example.skillcinema.databinding.DialogNewCollectionBinding
-import com.example.skillcinema.databinding.FragmentAddMovieBinding
 import com.example.skillcinema.entity.Movie
 import com.example.skillcinema.presentation.viewmodel.DatabaseViewModel
-import com.example.skillcinema.presentation.viewmodel.adapter.addMovieToCollection.AddMovieToCollectionAdapter
-import com.example.skillcinema.presentation.viewmodel.adapter.decorator.HorizontalDividerDecoration
+import com.example.skillcinema.presentation.adapter.addMovieToCollection.AddMovieToCollectionAdapter
+import com.example.skillcinema.presentation.decorator.HorizontalDividerDecoration
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -28,7 +29,7 @@ class AddMovieToCollectionFragment(
     private val movie: Movie,
     private val databaseViewModel: DatabaseViewModel
 ) : BottomSheetDialogFragment() {
-    private var _binding: FragmentAddMovieBinding? = null
+    private var _binding: BottomFragmentAddMovieBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -36,7 +37,7 @@ class AddMovieToCollectionFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentAddMovieBinding.inflate(inflater)
+        _binding = BottomFragmentAddMovieBinding.inflate(inflater)
         return binding.root
     }
 
@@ -87,24 +88,22 @@ class AddMovieToCollectionFragment(
         closeDialogNewCollectionButton.setOnClickListener { dialogNewCollection.hide() }
 
         //Error dialog
-        val dialogErrorBinding = DialogErrorBinding.inflate(layoutInflater)
-        val dialogError = Dialog(requireContext())
-        dialogError.setContentView(dialogErrorBinding.root)
-        dialogError.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val errorDescription = dialogErrorBinding.errorDescription
-        val closeDialogErrorButton = dialogErrorBinding.closeButton
-        closeDialogErrorButton.setOnClickListener { dialogError.hide() }
+//        val dialogErrorBinding = DialogErrorBinding.inflate(layoutInflater)
+//        val dialogError = Dialog(requireContext())
+//        dialogError.setContentView(dialogErrorBinding.root)
+//        dialogError.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//        val errorDescription = dialogErrorBinding.errorDescription
+//        val closeDialogErrorButton = dialogErrorBinding.closeButton
+//        closeDialogErrorButton.setOnClickListener { dialogError.hide() }
 
         binding.addCollectionButton.setOnClickListener {
             dialogNewCollection.show()
             addCollectionButton.setOnClickListener {
                 val text = newCollectionName.text.toString()
                 if (text.isEmpty()) {
-                    errorDescription.text = getString(R.string.no_collection_name)
-                    dialogError.show()
+                    errorDialog(getString(R.string.no_collection_name))
                 } else if (databaseViewModel.checkMovieListName(text)) {
-                    errorDescription.text = getString(R.string.wrong_collection_name)
-                    dialogError.show()
+                    errorDialog(getString(R.string.wrong_collection_name))
                 } else viewLifecycleOwner.lifecycleScope.launch {
                     databaseViewModel.insertMovieList(text)
                     adapter.notifyItemInserted(databaseViewModel.collections.value.lastIndex)
@@ -113,6 +112,15 @@ class AddMovieToCollectionFragment(
             }
         }
         binding.closeButton.setOnClickListener { this.dismiss() }
+    }
+
+    private fun errorDialog(description: String) {
+        val dialog =
+            ErrorBottomFragment(description)
+        val sfm = activity?.supportFragmentManager
+        if (sfm != null) {
+            dialog.show(sfm, "ErrorDialog")
+        }
     }
 
     private fun fullScreen(bottomSheet: View) {

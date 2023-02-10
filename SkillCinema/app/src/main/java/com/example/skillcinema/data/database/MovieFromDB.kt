@@ -3,7 +3,7 @@ package com.example.skillcinema.data.database
 import com.example.skillcinema.entity.Movie
 import com.example.skillcinema.entity.MovieCountry
 import com.example.skillcinema.entity.MovieGenre
-import com.example.skillcinema.entity.data.database.DBMovie
+import com.example.skillcinema.entity.database.DBMovie
 
 class MovieFromDB(
     val movie: DBMovie,

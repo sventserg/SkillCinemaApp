@@ -5,7 +5,7 @@ import android.content.Context
 import com.example.skillcinema.data.database.DatabaseRepositoryImp
 import com.example.skillcinema.data.database.DatabaseStorage
 import com.example.skillcinema.data.repository.*
-import com.example.skillcinema.data.storage.AppPreferences
+import com.example.skillcinema.data.preferences.AppPreferences
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

@@ -11,27 +11,11 @@ class PresentationModule {
 
     @Provides
     @Singleton
-    fun provideHomepageVM(
-        loadApiFilters: LoadApiFilters,
-        loadMovieList: LoadMovieList,
-        getMonthName: GetMonthName,
-        randomFilter: RandomFilter
-    ): HomepageVM {
-        return HomepageVM(
-            loadApiFilters,
-            loadMovieList,
-            getMonthName,
-            randomFilter
-        )
-    }
-
-    @Provides
-    @Singleton
     fun provideHomepageViewModel(
-        loadMovieList: LoadMovieList,
-        getMonthName: GetMonthName,
-        randomFilter: RandomFilter,
-        loadMovieData: LoadMovieData
+        loadMovieList: LoadMovieListUseCase,
+        getMonthName: GetMonthNameUseCase,
+        randomFilter: GetRandomFilterUseCase,
+        loadMovieData: LoadMovieDataUseCase
     ): HomepageViewModel {
         return HomepageViewModel(
             loadMovieList,
@@ -44,8 +28,8 @@ class PresentationModule {
     @Provides
     @Singleton
     fun provideMainViewModel(
-        loadMovieData: LoadMovieData,
-        loadApiFilters: LoadApiFilters
+        loadMovieData: LoadMovieDataUseCase,
+        loadApiFilters: LoadApiFiltersUseCase
     ): MainViewModel {
         return MainViewModel(loadMovieData, loadApiFilters)
     }
@@ -53,71 +37,71 @@ class PresentationModule {
     @Provides
     @Singleton
     fun provideMovieListPageVM(
-        loadMovieList: LoadMovieList
-    ): MovieListPageVM {
-        return MovieListPageVM(loadMovieList)
+        loadMovieList: LoadMovieListUseCase
+    ): MovieListPageViewModel {
+        return MovieListPageViewModel(loadMovieList)
     }
 
     @Provides
     @Singleton
     fun provideMoviePageVM(
-        loadMovieData: LoadMovieData,
-        getFilteredStaff: GetFilteredStaff,
-        loadSeasons: LoadSeasons,
-        seriesCalculation: SeriesCalculation
-    ): MoviePageVM {
-        return MoviePageVM(loadMovieData, getFilteredStaff, loadSeasons, seriesCalculation)
+        loadMovieData: LoadMovieDataUseCase,
+        getFilteredStaff: GetFilteredStaffUseCase,
+        loadSeasons: LoadSeasonsUseCase,
+        seriesCalculation: GetEpisodesNumberUseCase
+    ): MoviePageViewModel {
+        return MoviePageViewModel(loadMovieData, getFilteredStaff, loadSeasons, seriesCalculation)
     }
 
     @Provides
     @Singleton
     fun provideStaffPersonVM(
-        loadPerson: LoadPerson,
-        loadMovieData: LoadMovieData,
-        movieRatingSorter: MovieRatingSorter
-    ): StaffPersonVM {
-        return StaffPersonVM(loadPerson, loadMovieData, movieRatingSorter)
+        loadPerson: LoadPersonUseCase,
+        loadMovieData: LoadMovieDataUseCase,
+        getSortedMovieList: GetSortedMovieListUseCase
+    ): StaffPersonViewModel {
+        return StaffPersonViewModel(loadPerson, loadMovieData, getSortedMovieList)
     }
 
     @Provides
     @Singleton
     fun provideGalleryVM(
-        loadMovieImage: LoadMovieImage
-    ): GalleryVM {
-        return GalleryVM(loadMovieImage)
+        loadMovieImage: LoadMovieImageUseCase
+    ): GalleryViewModel {
+        return GalleryViewModel(loadMovieImage)
     }
 
     @Provides
     @Singleton
     fun provideFilmographyVM(
-        getSortedMovieList: GetSortedMovieList,
-        loadMovieData: LoadMovieData
-    ): FilmographyVM {
-        return FilmographyVM(getSortedMovieList, loadMovieData)
+        getSortedMovieList: GetSortedMovieListUseCase,
+        loadMovieData: LoadMovieDataUseCase
+    ): FilmographyViewModel {
+        return FilmographyViewModel(getSortedMovieList, loadMovieData)
     }
 
     @Provides
     @Singleton
     fun provideProfilePageVM(
-        loadMovieData: LoadMovieData
-    ): ProfilePageVM {
-        return ProfilePageVM(loadMovieData)
+        loadMovieData: LoadMovieDataUseCase
+    ): ProfilePageViewModel {
+        return ProfilePageViewModel(loadMovieData)
     }
 
     @Provides
     @Singleton
     fun provideSearchPageVM(
-        search: Search,
-        loadApiFilters: LoadApiFilters
-    ): SearchPageVM {
-        return SearchPageVM(search, loadApiFilters)
+        search: SearchUseCase,
+        loadApiFilters: LoadApiFiltersUseCase
+    ): SearchPageViewModel {
+        return SearchPageViewModel(search, loadApiFilters)
     }
 
     @Provides
     @Singleton
     fun provideDatabaseViewModel(
-        database: Database,
-        settings: GetAppPreferences
+        database: DatabaseUseCase,
+        settings: GetAppPreferencesUseCase
     ): DatabaseViewModel {
         return DatabaseViewModel(database, settings)
     }

@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.skillcinema.R
-import com.example.skillcinema.databinding.MovieInformationTextLineBinding
+import com.example.skillcinema.databinding.CustomMovieInformationTextLineBinding
 
 class MovieInformationTextLine @JvmOverloads constructor(
     context: Context,
@@ -14,12 +14,12 @@ class MovieInformationTextLine @JvmOverloads constructor(
     defStyleRes: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr, defStyleRes) {
 
-    private val binding: MovieInformationTextLineBinding
+    private val binding: CustomMovieInformationTextLineBinding
 
     init {
         val inflater = LayoutInflater.from(context)
-        inflater.inflate(R.layout.movie_information_text_line, this, true)
-        binding = MovieInformationTextLineBinding.bind(this)
+        inflater.inflate(R.layout.custom_movie_information_text_line, this, true)
+        binding = CustomMovieInformationTextLineBinding.bind(this)
         attributesInit(attrs, defStyleAttr, defStyleRes)
     }
 

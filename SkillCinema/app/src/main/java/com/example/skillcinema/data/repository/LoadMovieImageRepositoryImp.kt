@@ -5,7 +5,7 @@ import com.example.skillcinema.data.dto.MovieImageListDto
 import com.example.skillcinema.data.retrofit.LoadMovieDataRetrofit
 import com.example.skillcinema.entity.MovieImageList
 import com.example.skillcinema.entity.MovieImageType
-import com.example.skillcinema.entity.data.repository.LoadMovieImageRepository
+import com.example.skillcinema.entity.repository.LoadMovieImageRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import retrofit2.Call

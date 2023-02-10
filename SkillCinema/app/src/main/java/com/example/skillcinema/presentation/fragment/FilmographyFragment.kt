@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.skillcinema.App
 import com.example.skillcinema.R
 import com.example.skillcinema.data.GetPersonProfessionName
@@ -18,8 +19,8 @@ import com.example.skillcinema.databinding.FragmentFilmographyBinding
 import com.example.skillcinema.databinding.TabItemBinding
 import com.example.skillcinema.entity.Movie
 import com.example.skillcinema.entity.PersonProfessionKey
-import com.example.skillcinema.presentation.fragment.VPFragment.PersonMovieListFragment
-import com.example.skillcinema.presentation.viewmodel.adapter.viewPager.VPAdapter
+import com.example.skillcinema.presentation.fragment.view_pager.PersonMovieListFragment
+import com.example.skillcinema.presentation.adapter.viewPager.VPAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.launch
 
@@ -60,6 +61,8 @@ class FilmographyFragment : Fragment() {
         val dialogBinding = DialogLoadingBinding.inflate(layoutInflater)
         dialog.setContentView(dialogBinding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(false)
 
         val person = mainViewModel.person.value
         viewLifecycleOwner.lifecycleScope.launch {
@@ -114,7 +117,12 @@ class FilmographyFragment : Fragment() {
                 personProfessionKey.key
             )
             fragmentsList.clear()
-            fragmentsList.add(PersonMovieListFragment.newInstance(movieList, name, movieList.size))
+            fragmentsList.add(
+                PersonMovieListFragment.newInstance(
+                    movieList,
+                    name,
+                    movieList.size
+                ) { findNavController().navigate(R.id.action_filmographyFragment_to_moviePageFragment) })
         }
     }
 

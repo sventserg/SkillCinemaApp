@@ -7,11 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import com.example.skillcinema.App
-import com.example.skillcinema.R
 import com.example.skillcinema.databinding.FragmentImageScrollBinding
-import com.example.skillcinema.presentation.viewmodel.adapter.movieImage.PagingMovieImageAdapter
-import com.example.skillcinema.presentation.viewmodel.adapter.movieImage.ScrollablePagingImageAdapter
-import kotlinx.coroutines.NonDisposableHandle.parent
+import com.example.skillcinema.presentation.adapter.movieImage.ScrollablePagingImageAdapter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 

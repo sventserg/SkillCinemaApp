@@ -1,11 +1,11 @@
 package com.example.skillcinema.presentation.viewmodel
 
 import com.example.skillcinema.data.database.*
-import com.example.skillcinema.domain.Database
-import com.example.skillcinema.domain.GetAppPreferences
+import com.example.skillcinema.domain.DatabaseUseCase
+import com.example.skillcinema.domain.GetAppPreferencesUseCase
 import com.example.skillcinema.entity.Movie
-import com.example.skillcinema.entity.data.database.DBMovie
-import com.example.skillcinema.entity.data.database.DBUserMovieList
+import com.example.skillcinema.entity.database.DBMovie
+import com.example.skillcinema.entity.database.DBUserMovieList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
@@ -14,8 +14,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class DatabaseViewModel(
-    private val database: Database,
-    private val getAppPreferences: GetAppPreferences
+    private val database: DatabaseUseCase,
+    private val getAppPreferences: GetAppPreferencesUseCase
 ) {
 
     //User collections states

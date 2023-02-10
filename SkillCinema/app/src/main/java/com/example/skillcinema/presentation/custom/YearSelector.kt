@@ -4,11 +4,10 @@ import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.FrameLayout
 import com.example.skillcinema.R
 import com.example.skillcinema.databinding.ChipBinding
-import com.example.skillcinema.databinding.YearSelectorBinding
+import com.example.skillcinema.databinding.CustomYearSelectorBinding
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,14 +19,14 @@ class YearSelector @JvmOverloads constructor(
     defStyleRes: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
 
-    private val binding: YearSelectorBinding
+    private val binding: CustomYearSelectorBinding
     private var _selectedYear = MutableStateFlow<Int?>(null)
     val selectedYear = _selectedYear.asStateFlow()
 
     init {
         val inflater = LayoutInflater.from(context)
-        inflater.inflate(R.layout.year_selector, this, true)
-        binding = YearSelectorBinding.bind(this)
+        inflater.inflate(R.layout.custom_year_selector, this, true)
+        binding = CustomYearSelectorBinding.bind(this)
         attributesInit(attrs, defStyleAttr, defStyleRes)
     }
 

@@ -106,6 +106,7 @@
     <string name="no_connection">Проверьте интернет-соединение и попробуйте обновить страницу</string>
     <string name="refresh_page">обновить страницу</string>
     <string name="default_settings">параметры по умолчанию</string>
+    <string name="lets_go">поехали</string>
 
     <plurals name="movies">
         <item quantity="zero">%d фильмов</item>

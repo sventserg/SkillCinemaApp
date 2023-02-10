@@ -4,7 +4,7 @@ import android.util.Log
 import com.example.skillcinema.data.dto.ApiFiltersDto
 import com.example.skillcinema.data.retrofit.LoadApiFiltersRetrofit
 import com.example.skillcinema.entity.ApiFilters
-import com.example.skillcinema.entity.data.repository.LoadApiFiltersRepository
+import com.example.skillcinema.entity.repository.LoadApiFiltersRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import retrofit2.Call

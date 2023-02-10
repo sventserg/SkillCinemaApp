@@ -10,8 +10,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.skillcinema.App
 import com.example.skillcinema.R
 import com.example.skillcinema.databinding.FragmentOnBoardingPageBinding
-import com.example.skillcinema.presentation.fragment.VPFragment.OnBoardingFragment
-import com.example.skillcinema.presentation.viewmodel.adapter.viewPager.ImageVPAdapter
+import com.example.skillcinema.presentation.fragment.view_pager.OnBoardingFragment
+import com.example.skillcinema.presentation.adapter.viewPager.ImageVPAdapter
 
 
 class OnBoardingPageFragment : Fragment() {
@@ -41,6 +41,16 @@ class OnBoardingPageFragment : Fragment() {
         fragmentList.add(OnBoardingFragment.newInstance(R.drawable.on_boarding_image_2))
         fragmentList.add(OnBoardingFragment.newInstance(R.drawable.on_boarding_image_3))
         currentIndicator(0)
+
+        binding.firstIndicator.setOnClickListener {
+            binding.viewPager.setCurrentItem(0, true)
+        }
+        binding.secondIndicator.setOnClickListener {
+            binding.viewPager.setCurrentItem(1, true)
+        }
+        binding.thirdIndicator.setOnClickListener {
+            binding.viewPager.setCurrentItem(2, true)
+        }
 
         val activity = activity
         if (activity != null && fragmentList.isNotEmpty()) {

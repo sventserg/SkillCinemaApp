@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.fragment.VPFragment.OnBoardingFragment">
+    tools:context=".presentation.fragment.view_pager.OnBoardingFragment">
 
     <TextView
         android:id="@+id/appName"
@@ -79,7 +79,7 @@
         android:layout_marginStart="26dp"
         android:layout_marginEnd="26dp"
         android:layout_marginBottom="30dp"
-        android:text="погнали"
+        android:text="@string/lets_go"
         app:cornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="parent" />
 

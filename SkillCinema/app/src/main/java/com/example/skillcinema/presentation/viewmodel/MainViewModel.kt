@@ -2,17 +2,16 @@ package com.example.skillcinema.presentation.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.skillcinema.R
-import com.example.skillcinema.domain.LoadApiFilters
-import com.example.skillcinema.domain.LoadMovieData
+import com.example.skillcinema.domain.LoadApiFiltersUseCase
+import com.example.skillcinema.domain.LoadMovieDataUseCase
 import com.example.skillcinema.entity.*
 import com.example.skillcinema.presentation.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class MainViewModel(
-    private val loadMovieData: LoadMovieData,
-    private val loadApiFilters: LoadApiFilters
+    private val loadMovieData: LoadMovieDataUseCase,
+    private val loadApiFilters: LoadApiFiltersUseCase
 ) : ViewModel() {
 
     suspend fun loadMovieData(id: Int): Movie? {

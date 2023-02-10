@@ -7,7 +7,7 @@ import com.example.skillcinema.data.dto.MovieListDto
 import com.example.skillcinema.data.dto.StaffDto
 import com.example.skillcinema.data.retrofit.LoadMovieDataRetrofit
 import com.example.skillcinema.entity.*
-import com.example.skillcinema.entity.data.repository.LoadMovieDataRepository
+import com.example.skillcinema.entity.repository.LoadMovieDataRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import retrofit2.Call

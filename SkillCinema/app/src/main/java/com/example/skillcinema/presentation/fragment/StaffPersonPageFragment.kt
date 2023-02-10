@@ -17,13 +17,12 @@ import com.example.skillcinema.databinding.DialogImageBinding
 import com.example.skillcinema.databinding.DialogLoadingBinding
 import com.example.skillcinema.databinding.FragmentStaffPersonPageBinding
 import com.example.skillcinema.entity.Movie
-import com.example.skillcinema.entity.MovieImage
 import com.example.skillcinema.entity.Person
 import com.example.skillcinema.presentation.DEFAULT_SPACING
 import com.example.skillcinema.presentation.START_END_MARGIN
-import com.example.skillcinema.presentation.viewmodel.MovieCollectionType
-import com.example.skillcinema.presentation.viewmodel.adapter.decorator.HorizontalItemDecoration
-import com.example.skillcinema.presentation.viewmodel.adapter.movieList.MovieListAdapter
+import com.example.skillcinema.presentation.MovieCollectionType
+import com.example.skillcinema.presentation.decorator.HorizontalItemDecoration
+import com.example.skillcinema.presentation.adapter.movieList.MovieListAdapter
 import kotlinx.coroutines.launch
 
 class StaffPersonPageFragment : Fragment() {
@@ -68,7 +67,6 @@ class StaffPersonPageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentStaffPersonPageBinding.inflate(inflater)
-
         return binding.root
     }
 
@@ -87,7 +85,6 @@ class StaffPersonPageFragment : Fragment() {
             binding.swipeRefresh.isRefreshing = false
             loadStaffPersonInformation()
         }
-
     }
 
     override fun onDestroyView() {
@@ -101,55 +98,58 @@ class StaffPersonPageFragment : Fragment() {
         val dialogBinding = DialogLoadingBinding.inflate(layoutInflater)
         dialog.setContentView(dialogBinding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(false)
 
         viewLifecycleOwner.lifecycleScope.launch {
             dialog.show()
             binding.staffPersonInformation.visibility = View.GONE
             binding.noConnectionLayout.visibility = View.GONE
+
             val selectedPerson = mainViewModel.selectedStaffPerson.value
             if (selectedPerson != null) {
                 personVM.loadPerson(selectedPerson.staffId, requireContext())
-                val person = personVM.person.value
-                if (person != null) {
-                    Glide
-                        .with(binding.root)
-                        .load(person.posterUrl)
-                        .centerCrop()
-                        .into(binding.personPhoto)
-                    binding.filmographyTextLine.initTextLine(onForwardButtonClick = {
-                        clickOnFilmography(person)
-                    })
+            }
+            val person = personVM.person.value
+            if (person != null && person.personId == selectedPerson?.staffId) {
+                Glide
+                    .with(binding.root)
+                    .load(person.posterUrl)
+                    .centerCrop()
+                    .into(binding.personPhoto)
+                binding.filmographyTextLine.initTextLine(onForwardButtonClick = {
+                    clickOnFilmography(person)
+                })
 
-                    val personName = person.nameRu ?: person.nameEn ?: ""
-                    binding.personName.text = personName
-                    binding.personRole.text = person.profession
-                    binding.allMoviesText.text = personVM.moviesQuantity.value
+                val personName = person.nameRu ?: person.nameEn ?: ""
+                binding.personName.text = personName
+                binding.personRole.text = person.profession
+                binding.allMoviesText.text = personVM.moviesQuantity.value
 
-                    val bestMovies = personVM.bestPersonMovies.value
-                    val listName = getString(R.string.best_person_movies, personName)
-                    if (bestMovies != null && bestMovies.isNotEmpty()) {
-                        binding.bestMovies.visibility = View.VISIBLE
-                        val adapter =
-                            MovieListAdapter(
-                                movieList = bestMovies,
-                                forwardArrow = bestMovies.size >= 10,
-                                onClick = { onClickMovie(it) },
-                                lastElementClick = { clickOnBestMovies(listName, bestMovies) })
+                val bestMovies = personVM.bestPersonMovies.value
+                val listName = getString(R.string.best_person_movies, personName)
+                if (bestMovies != null && bestMovies.isNotEmpty()) {
+                    binding.bestMovies.visibility = View.VISIBLE
+                    val adapter =
+                        MovieListAdapter(
+                            movieList = bestMovies,
+                            forwardArrow = bestMovies.size >= 10,
+                            onClick = { onClickMovie(it) },
+                            lastElementClick = { clickOnBestMovies(listName, bestMovies) })
 
-                        binding.bestMovies.initView(
-                            adapter = adapter,
-                            onForwardButtonClick = { clickOnBestMovies(listName, bestMovies) }
-                        )
-                    } else {
-                        binding.bestMovies.visibility = View.GONE
-                    }
-                    binding.personPhoto.setOnClickListener {
-                        onPhotoClick(person.posterUrl)
-                    }
-                    binding.staffPersonInformation.visibility = View.VISIBLE
+                    binding.bestMovies.initView(
+                        adapter = adapter,
+                        onForwardButtonClick = { clickOnBestMovies(listName, bestMovies) }
+                    )
                 } else {
-                    binding.noConnectionLayout.visibility = View.VISIBLE
+                    binding.bestMovies.visibility = View.GONE
                 }
+                binding.personPhoto.setOnClickListener { _ ->
+                    onPhotoClick(person.posterUrl)
+                }
+                binding.staffPersonInformation.visibility = View.VISIBLE
+            } else {
+                binding.noConnectionLayout.visibility = View.VISIBLE
             }
             dialog.dismiss()
         }
