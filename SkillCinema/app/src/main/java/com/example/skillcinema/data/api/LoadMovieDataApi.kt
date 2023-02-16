@@ -7,6 +7,7 @@ import com.example.skillcinema.data.dto.MovieListDto
 import com.example.skillcinema.data.dto.StaffDto
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
@@ -20,6 +21,12 @@ interface LoadMovieDataApi {
     ): Call<MovieDto>
 
     @Headers(KINOPOISK_API_KEY)
+    @GET(GET_MOVIE_ID_PATH)
+    suspend fun loadMovieForPaging(
+        @Path("kinopoiskId") kinopoiskId: Int
+    ): Response<MovieDto>
+
+    @Headers(KINOPOISK_API_KEY)
     @GET(GET_MOVIE_STAFF_PATH)
     fun loadMovieStaff(
         @Query(QUERY_PARAMETER_FILM_ID) kinopoiskId: Int
@@ -27,11 +34,19 @@ interface LoadMovieDataApi {
 
     @Headers(KINOPOISK_API_KEY)
     @GET(GET_MOVIE_IMAGES_PATH)
-    fun loadMovieImages(
+   fun loadMovieImages(
         @Path("kinopoiskId") kinopoiskId: Int,
         @Query(QUERY_PARAMETER_TYPE) type: String,
         @Query(QUERY_PARAMETER_PAGE) page: Int
     ): Call<MovieImageListDto>
+
+    @Headers(KINOPOISK_API_KEY)
+    @GET(GET_MOVIE_IMAGES_PATH)
+    suspend fun loadMovieImagesForPaging(
+        @Path("kinopoiskId") kinopoiskId: Int,
+        @Query(QUERY_PARAMETER_TYPE) type: String,
+        @Query(QUERY_PARAMETER_PAGE) page: Int
+    ): Response<MovieImageListDto>
 
     @Headers(KINOPOISK_API_KEY)
     @GET(GET_MOVIE_SIMILARS)

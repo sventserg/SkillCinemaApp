@@ -33,7 +33,7 @@ class SearchSettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.pageName.init {
-            findNavController().navigate(R.id.action_searchSettingsFragment_to_searchFragment)
+            activity?.onBackPressedDispatcher?.onBackPressed()
         }
 
         //Search type filter
@@ -234,8 +234,8 @@ class SearchSettingsFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 
 }

@@ -7,10 +7,10 @@ import android.view.View
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 
-class HorizontalDividerDecoration(private val drawable: Drawable) : RecyclerView.ItemDecoration() {
+class HorizontalDividerDecoration(private val drawable: Drawable?) : RecyclerView.ItemDecoration() {
 
-    val width = drawable.intrinsicWidth
-    val height = drawable.intrinsicHeight
+    val width = drawable?.intrinsicWidth
+    val height = drawable?.intrinsicHeight
 
     override fun getItemOffsets(
         outRect: Rect,
@@ -21,7 +21,7 @@ class HorizontalDividerDecoration(private val drawable: Drawable) : RecyclerView
         parent.adapter?.let { adapter ->
             val position = parent.getChildAdapterPosition(view)
                 .let { if (it == RecyclerView.NO_POSITION) return else it }
-            outRect.bottom = if (position == adapter.itemCount - 1) 0
+            outRect.bottom = if (position == adapter.itemCount - 1 || width == null) 0
             else width
         }
     }
@@ -31,13 +31,13 @@ class HorizontalDividerDecoration(private val drawable: Drawable) : RecyclerView
             parent.children.forEach { view ->
                 val position = parent.getChildAdapterPosition(view)
                     .let { if (it == RecyclerView.NO_POSITION) return else it }
-                if (position != adapter.itemCount - 1) {
+                if (position != adapter.itemCount - 1 && height != null) {
                     val left = parent.paddingLeft
                     val top = view.bottom
                     val right = parent.width - parent.paddingRight
                     val bottom = top + height
-                    drawable.bounds = Rect(left, top, right, bottom)
-                    drawable.draw(c)
+                    drawable?.bounds = Rect(left, top, right, bottom)
+                    drawable?.draw(c)
                 }
             }
         }

@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import androidx.core.content.res.ResourcesCompat.getDrawable
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.skillcinema.R
@@ -56,7 +57,6 @@ class AddMovieToCollectionFragment(
         return dialog
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Glide
             .with(binding.root)
@@ -74,7 +74,7 @@ class AddMovieToCollectionFragment(
         val adapter = AddMovieToCollectionAdapter(movie, databaseViewModel)
         binding.collections.adapter = adapter
         val divider =
-            HorizontalDividerDecoration(resources.getDrawable(R.drawable.horizontal_divider, null))
+            HorizontalDividerDecoration(getDrawable(resources, R.drawable.horizontal_divider, null))
         binding.collections.addItemDecoration(divider)
 
         //Add new collection dialog
@@ -86,15 +86,6 @@ class AddMovieToCollectionFragment(
         val newCollectionName = dialogNewCollectionBinding.editText
         val closeDialogNewCollectionButton = dialogNewCollectionBinding.closeButton
         closeDialogNewCollectionButton.setOnClickListener { dialogNewCollection.hide() }
-
-        //Error dialog
-//        val dialogErrorBinding = DialogErrorBinding.inflate(layoutInflater)
-//        val dialogError = Dialog(requireContext())
-//        dialogError.setContentView(dialogErrorBinding.root)
-//        dialogError.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//        val errorDescription = dialogErrorBinding.errorDescription
-//        val closeDialogErrorButton = dialogErrorBinding.closeButton
-//        closeDialogErrorButton.setOnClickListener { dialogError.hide() }
 
         binding.addCollectionButton.setOnClickListener {
             dialogNewCollection.show()
@@ -130,7 +121,8 @@ class AddMovieToCollectionFragment(
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
+        binding.collections.adapter = null
         _binding = null
+        super.onDestroyView()
     }
 }

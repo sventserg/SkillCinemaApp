@@ -53,6 +53,17 @@ class LoadMovieDataRepositoryImp : LoadMovieDataRepository {
         return movie.value
     }
 
+    override suspend fun loadMovieForPaging(kinopoiskId: Int): Movie? {
+        val response = LoadMovieDataRetrofit.loadMovieDataApi.loadMovieForPaging(kinopoiskId)
+        if (response.isSuccessful) {
+            Log.d("RETROFIT", "Response code: ${response.code()}")
+            return response.body()
+        } else {
+            Log.d(RETROFIT_TAG, "Load movie, failure response")
+            return null
+        }
+    }
+
     private fun movieStaffResponse(kinopoiskId: Int) {
         LoadMovieDataRetrofit.loadMovieDataApi.loadMovieStaff(kinopoiskId)
             .enqueue(object : Callback<List<StaffDto>> {
@@ -126,6 +137,21 @@ class LoadMovieDataRepositoryImp : LoadMovieDataRepository {
         }
         movieImageListIsLoaded = false
         return movieImageList.value
+    }
+
+        override suspend fun loadMovieImageForPaging(
+        kinopoiskId: Int,
+        page: Int,
+        type: MovieImageType
+    ): MovieImageList? {
+       val response = LoadMovieDataRetrofit.loadMovieDataApi.loadMovieImagesForPaging(kinopoiskId, type.type, page)
+        if (response.isSuccessful) {
+            Log.d(RETROFIT_TAG, "Load image, response code: ${response.code()}")
+            return response.body()
+        } else {
+            Log.d(RETROFIT_TAG, "Load image, failure response")
+            return null
+        }
     }
 
     private fun similarMoviesResponse(kinopoiskId: Int) {

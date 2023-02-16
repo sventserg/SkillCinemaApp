@@ -17,4 +17,6 @@ interface Person {
     val profession: String?
     val facts: List<String>?
     val films: List<PersonMovie>
+
+    fun name() : String
 }

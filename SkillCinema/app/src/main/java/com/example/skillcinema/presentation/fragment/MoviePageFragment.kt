@@ -2,17 +2,18 @@ package com.example.skillcinema.presentation.fragment
 
 import android.animation.LayoutTransition
 import android.animation.LayoutTransition.TransitionListener
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -26,6 +27,7 @@ import com.example.skillcinema.databinding.FragmentMoviePageBinding
 import com.example.skillcinema.entity.Movie
 import com.example.skillcinema.entity.MovieImage
 import com.example.skillcinema.entity.Staff
+import com.example.skillcinema.presentation.AppBarStateChangeListener
 import com.example.skillcinema.presentation.DEFAULT_SPACING
 import com.example.skillcinema.presentation.START_END_MARGIN
 import com.example.skillcinema.presentation.fragment.bottom.AddMovieToCollectionFragment
@@ -34,9 +36,11 @@ import com.example.skillcinema.presentation.decorator.HorizontalItemDecoration
 import com.example.skillcinema.presentation.adapter.movieImage.MovieImageAdapter
 import com.example.skillcinema.presentation.adapter.movieList.MovieListAdapter
 import com.example.skillcinema.presentation.adapter.staff.StaffAdapter
+import com.google.android.material.appbar.AppBarLayout
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.math.abs
 
 class MoviePageFragment : Fragment() {
 
@@ -45,23 +49,105 @@ class MoviePageFragment : Fragment() {
     private val mainViewModel = App.appComponent.mainViewModel()
     private val moviePageVM = App.appComponent.moviePageVM()
     private val databaseViewModel = App.appComponent.databaseViewModel()
-
+    private val appBarStateChangeListener = createAppBarStateChangeListener()
     private var isDescriptionCollapsed = true
     private var currentAnimationState = IDLE_ANIMATION_STATE
     private fun isRunning(): Boolean {
         return currentAnimationState != IDLE_ANIMATION_STATE
     }
 
-    companion object {
-        private const val DESCRIPTION_MAX_LINES = 5
-        private const val IDLE_ANIMATION_STATE = 1
-        private const val EXPANDING_ANIMATION_STATE = 2
-        private const val COLLAPSING_ANIMATION_STATE = 3
-        private const val ACTORS_NUMBER = 20
-        private const val WORKERS_NUMBER = 6
-        private const val ACTORS_LINE_COUNT = 4
-        private const val WORKERS_LINE_COUNT = 2
-        private const val PADDING = 20
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        postponeEnterTransition()
+        _binding = FragmentMoviePageBinding.inflate(inflater)
+        applyLayoutTransition()
+        return binding.root
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        postponeEnterTransition()
+        val margin = (resources.displayMetrics.scaledDensity * START_END_MARGIN).toInt()
+        val spacing = (resources.displayMetrics.scaledDensity * DEFAULT_SPACING).toInt()
+
+        addDecorations(margin, spacing)
+
+        binding.appBarLayout.addOnOffsetChangedListener(appBarStateChangeListener)
+        binding.toolbar.title = mainViewModel.selectedMovie.value?.name()
+
+        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        activity?.window?.statusBarColor = Color.TRANSPARENT
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            mainViewModel.selectedMovie.collect {
+                loadMovie(it)
+            }
+        }
+
+        binding.noConnectionButton.setOnClickListener {
+            viewLifecycleOwner.lifecycleScope.launch {
+                loadMovie(mainViewModel.selectedMovie.value)
+            }
+        }
+
+
+        // Is movie added to favorites
+        viewLifecycleOwner.lifecycleScope.launch {
+            databaseViewModel.isFavorite.collect {
+                if (it) binding.favoriteIcon.setImageResource(R.drawable.mp_favorite_icon)
+                else binding.favoriteIcon.setImageResource(R.drawable.heart_off)
+            }
+        }
+
+        // Is movie added to want to watch list
+        viewLifecycleOwner.lifecycleScope.launch {
+            databaseViewModel.isWantToWatch.collect {
+                if (it) binding.wantToWatchIcon.setImageResource(R.drawable.ic_baseline_turned_in_24)
+                else binding.wantToWatchIcon.setImageResource(R.drawable.ic_baseline_turned_in_not_24)
+            }
+        }
+
+        // Is movie added to viewed list
+        viewLifecycleOwner.lifecycleScope.launch {
+            databaseViewModel.isViewed.collect {
+                if (it) binding.notWatchedIcon.setImageResource(R.drawable.mp_watched_icon)
+                else binding.notWatchedIcon.setImageResource(R.drawable.mp_not_watched_icon)
+            }
+        }
+
+        //Back button behavior
+        binding.actionToolbar.setNavigationOnClickListener {
+            activity?.onBackPressedDispatcher?.onBackPressed()
+        }
+
+        //Description behaviour
+        binding.description.maxLines = DESCRIPTION_MAX_LINES
+        binding.description.setOnClickListener {
+            if (isRunning()) {
+                binding.container.layoutTransition = binding.container.layoutTransition
+            }
+            if (isDescriptionCollapsed) {
+                currentAnimationState = EXPANDING_ANIMATION_STATE
+                binding.description.maxLines = Int.MAX_VALUE
+                isDescriptionCollapsed = false
+            } else {
+                currentAnimationState = COLLAPSING_ANIMATION_STATE
+                binding.description.maxLines = DESCRIPTION_MAX_LINES
+                isDescriptionCollapsed = true
+            }
+        }
+
+    }
+
+    override fun onDestroyView() {
+        binding.appBarLayout.removeOnOffsetChangedListener(appBarStateChangeListener)
+        _binding = null
+        super.onDestroyView()
+        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        activity?.window?.statusBarColor = resources.getColor(R.color.primaryDarkColor, null)
     }
 
     private fun onClickMovie(movie: Movie) {
@@ -129,6 +215,7 @@ class MoviePageFragment : Fragment() {
 
     private suspend fun loadMovie(movie: Movie?) {
 
+        this.postponeEnterTransition()
         val dialog = Dialog(requireContext())
         val dialogBinding = DialogLoadingBinding.inflate(layoutInflater)
         dialog.setContentView(dialogBinding.root)
@@ -137,7 +224,7 @@ class MoviePageFragment : Fragment() {
         dialog.setCancelable(false)
 
         dialog.show()
-        binding.mainContainer.visibility = View.GONE
+        binding.mainContainer.visibility = View.INVISIBLE
         if (!isDescriptionCollapsed) {
             binding.description.maxLines = DESCRIPTION_MAX_LINES
             isDescriptionCollapsed = true
@@ -169,11 +256,10 @@ class MoviePageFragment : Fragment() {
             binding.container.visibility = View.GONE
             binding.buttons.visibility = View.GONE
         }
-        binding.scrollView.scrollTo(0, 0)
         binding.appBarLayout.setExpanded(true, true)
-        binding.mainContainer.visibility = View.VISIBLE
-
         delay(1000)
+        binding.mainContainer.visibility = View.VISIBLE
+        this.startPostponedEnterTransition()
         dialog.dismiss()
     }
 
@@ -201,88 +287,6 @@ class MoviePageFragment : Fragment() {
                 spacing
             )
         )
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentMoviePageBinding.inflate(inflater)
-        applyLayoutTransition()
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        val margin = (resources.displayMetrics.scaledDensity * START_END_MARGIN).toInt()
-        val spacing = (resources.displayMetrics.scaledDensity * DEFAULT_SPACING).toInt()
-
-        addDecorations(margin, spacing)
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-//            activity?.window?.setDecorFitsSystemWindows(false)
-//        }
-//        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-//        activity?.window?.statusBarColor = Color.TRANSPARENT
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            mainViewModel.selectedMovie.collect {
-                loadMovie(it)
-            }
-        }
-
-        binding.noConnectionButton.setOnClickListener {
-            viewLifecycleOwner.lifecycleScope.launch {
-                loadMovie(mainViewModel.selectedMovie.value)
-            }
-        }
-
-
-        // Is movie added to favorites
-        viewLifecycleOwner.lifecycleScope.launch {
-            databaseViewModel.isFavorite.collect {
-                if (it) binding.favoriteIcon.setImageResource(R.drawable.mp_favorite_icon)
-                else binding.favoriteIcon.setImageResource(R.drawable.heart_off)
-            }
-        }
-
-        // Is movie added to want to watch list
-        viewLifecycleOwner.lifecycleScope.launch {
-            databaseViewModel.isWantToWatch.collect {
-                if (it) binding.wantToWatchIcon.setImageResource(R.drawable.ic_baseline_turned_in_24)
-                else binding.wantToWatchIcon.setImageResource(R.drawable.ic_baseline_turned_in_not_24)
-            }
-        }
-
-        // Is movie added to viewed list
-        viewLifecycleOwner.lifecycleScope.launch {
-            databaseViewModel.isViewed.collect {
-                if (it) binding.notWatchedIcon.setImageResource(R.drawable.mp_watched_icon)
-                else binding.notWatchedIcon.setImageResource(R.drawable.mp_not_watched_icon)
-            }
-        }
-
-        //Back button behavior
-        binding.backButton.setOnClickListener {
-            activity?.onBackPressedDispatcher?.onBackPressed()
-        }
-
-        //Description behaviour
-        binding.description.maxLines = DESCRIPTION_MAX_LINES
-        binding.description.setOnClickListener {
-            if (isRunning()) {
-                binding.container.layoutTransition = binding.container.layoutTransition
-            }
-            if (isDescriptionCollapsed) {
-                currentAnimationState = EXPANDING_ANIMATION_STATE
-                binding.description.maxLines = Int.MAX_VALUE
-                isDescriptionCollapsed = false
-            } else {
-                currentAnimationState = COLLAPSING_ANIMATION_STATE
-                binding.description.maxLines = DESCRIPTION_MAX_LINES
-                isDescriptionCollapsed = true
-            }
-        }
     }
 
     private fun loadMovieInformation(movie: Movie) {
@@ -518,13 +522,47 @@ class MoviePageFragment : Fragment() {
         )
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-//        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-//        activity?.window?.statusBarColor = resources.getColor(R.color.primaryDarkColor, null)
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-//            activity?.window?.setDecorFitsSystemWindows(true)
-//        }
+    private fun createAppBarStateChangeListener(): AppBarStateChangeListener {
+        return object : AppBarStateChangeListener() {
+            val darkMagick = ViewTreeObserver.OnPreDrawListener {
+                _binding?.scrollView?.scrollTo(0, 0)
+                true
+            }
+
+            override fun onStateChanged(appBarLayout: AppBarLayout?, state: State?) {
+                when (state) {
+                    State.EXPANDED -> {
+                        binding.appBarLayout.viewTreeObserver.addOnPreDrawListener(darkMagick)
+                        binding.actionToolbar.navigationIcon = getDrawable(requireContext(), R.drawable.back_icon)
+                        binding.toolbar.title = NO_TITLE
+                    }
+
+                    State.IDLE -> {
+                        binding.appBarLayout.viewTreeObserver.removeOnPreDrawListener(darkMagick)
+                        binding.actionToolbar.navigationIcon = getDrawable(requireContext(), R.drawable.back_icon)
+                        binding.toolbar.title = NO_TITLE
+                    }
+                    else -> {
+                        binding.appBarLayout.viewTreeObserver.removeOnPreDrawListener(darkMagick)
+                        binding.actionToolbar.navigationIcon = getDrawable(requireContext(), R.drawable.back_icon_white)
+                        binding.toolbar.title = mainViewModel.selectedMovie.value?.name()
+                    }
+                }
+            }
+        }
     }
+
+    companion object {
+        private const val DESCRIPTION_MAX_LINES = 5
+        private const val IDLE_ANIMATION_STATE = 1
+        private const val EXPANDING_ANIMATION_STATE = 2
+        private const val COLLAPSING_ANIMATION_STATE = 3
+        private const val ACTORS_NUMBER = 20
+        private const val WORKERS_NUMBER = 6
+        private const val ACTORS_LINE_COUNT = 4
+        private const val WORKERS_LINE_COUNT = 2
+        private const val PADDING = 20
+        private const val NO_TITLE = " "
+    }
+
 }

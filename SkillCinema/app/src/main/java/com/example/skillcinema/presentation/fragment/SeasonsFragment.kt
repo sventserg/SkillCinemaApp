@@ -45,8 +45,9 @@ class SeasonsFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
+        binding.episodesContainer.adapter = null
         _binding = null
+        super.onDestroyView()
     }
 
     private fun loadSeasonsInformation() {
@@ -59,10 +60,9 @@ class SeasonsFragment : Fragment() {
             seasons.forEach {
                 fragmentList.add(EpisodesFragment.newInstance(it.episodes))
             }
-            val activity = activity
-            if (fragmentList.isNotEmpty() && activity != null) {
+            if (fragmentList.isNotEmpty()) {
 
-                val adapter = VPAdapter(activity, fragmentList)
+                val adapter = VPAdapter(requireActivity(), fragmentList)
                 binding.episodesContainer.adapter = adapter
                 TabLayoutMediator(
                     binding.tabLayout,

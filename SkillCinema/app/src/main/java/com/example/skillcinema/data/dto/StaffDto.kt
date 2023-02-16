@@ -31,4 +31,12 @@ class StaffDto(
             else -> StaffProfessionKeyDto.UNKNOWN
         }
     }
+
+    override fun name(): String {
+        var name = ""
+        if (nameRu != null && nameRu.isNotEmpty()) name = nameRu else {
+            if (nameEn != null && nameEn.isNotEmpty()) name = nameEn
+        }
+        return name
+    }
 }

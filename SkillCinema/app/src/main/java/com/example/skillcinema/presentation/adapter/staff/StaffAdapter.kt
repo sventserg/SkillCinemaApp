@@ -20,7 +20,7 @@ class StaffAdapter(
 
     override fun onBindViewHolder(holder: StaffViewHolder, position: Int) {
         val item = staff[position]
-        holder.binding.name.text = item.nameRu
+        holder.binding.name.text = item.name()
         holder.binding.role.text = when (item.profession()) {
             StaffProfessionKeyDto.WRITER -> PROFESSION_WRITER
             StaffProfessionKeyDto.OPERATOR -> PROFESSION_OPERATOR

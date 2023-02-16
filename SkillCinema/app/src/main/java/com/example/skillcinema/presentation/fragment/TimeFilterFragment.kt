@@ -27,7 +27,6 @@ class TimeFilterFragment : Fragment() {
 
     private fun onBackPressYearFromContainer() {
         val position = binding.yearFromContainer.currentItem
-        Log.d("Selector", "Position: $position")
         binding.yearFromContainer.setCurrentItem(position - 1, true)
     }
 
@@ -110,9 +109,11 @@ class TimeFilterFragment : Fragment() {
             activity?.onBackPressedDispatcher?.onBackPressed()
         }
 
-        val activity = activity
-        if (activity != null && yearFromFragmentList.isNotEmpty()) {
-            val yearFromAdapter = VPAdapter(activity, yearFromFragmentList)
+        binding.yearFromContainer.isSaveEnabled = false
+        binding.yearToContainer.isSaveEnabled = false
+
+        if (yearFromFragmentList.isNotEmpty()) {
+            val yearFromAdapter = VPAdapter(requireActivity(), yearFromFragmentList)
             binding.yearFromContainer.adapter = yearFromAdapter
             binding.yearFromContainer.setCurrentItem(yearFromFragmentList.size, false)
             binding.yearFromContainer.registerOnPageChangeCallback(object :
@@ -146,7 +147,7 @@ class TimeFilterFragment : Fragment() {
             }
             )
 
-            val yearToAdapter = VPAdapter(activity, yearToFragmentList)
+            val yearToAdapter = VPAdapter(requireActivity(), yearToFragmentList)
             binding.yearToContainer.adapter = yearToAdapter
             binding.yearToContainer.setCurrentItem(yearToFragmentList.size, false)
             binding.yearToContainer.registerOnPageChangeCallback(object :
@@ -182,7 +183,8 @@ class TimeFilterFragment : Fragment() {
         }
 
         binding.selectButton.setOnClickListener {
-            val yearFrom = yearFromFragmentList[binding.yearFromContainer.currentItem].getSelectedYear()
+            val yearFrom =
+                yearFromFragmentList[binding.yearFromContainer.currentItem].getSelectedYear()
             val yearTo = yearToFragmentList[binding.yearToContainer.currentItem].getSelectedYear()
             if (yearFrom != null && yearTo != null && yearFrom <= yearTo) {
                 searchPageVM.setYearFrom(yearFrom)
@@ -197,10 +199,14 @@ class TimeFilterFragment : Fragment() {
             }
         }
     }
+
     override fun onDestroyView() {
-        super.onDestroyView()
+        binding.yearFromContainer.adapter = null
+        binding.yearToContainer.adapter = null
         _binding = null
+        super.onDestroyView()
     }
+
     companion object {
         private const val WRONG_PERIOD = "Период выбран не корректно"
     }

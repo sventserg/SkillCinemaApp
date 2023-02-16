@@ -1,8 +1,5 @@
 package com.example.skillcinema.presentation.fragment
 
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,13 +11,12 @@ import com.example.skillcinema.App
 import com.example.skillcinema.R
 import com.example.skillcinema.data.GetPersonProfessionName
 import com.example.skillcinema.data.PersonProfessionKeyList
-import com.example.skillcinema.databinding.DialogLoadingBinding
 import com.example.skillcinema.databinding.FragmentFilmographyBinding
 import com.example.skillcinema.databinding.TabItemBinding
-import com.example.skillcinema.entity.Movie
+import com.example.skillcinema.entity.PersonMovie
 import com.example.skillcinema.entity.PersonProfessionKey
-import com.example.skillcinema.presentation.fragment.view_pager.PersonMovieListFragment
 import com.example.skillcinema.presentation.adapter.viewPager.VPAdapter
+import com.example.skillcinema.presentation.fragment.view_pager.PersonMovieListFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.launch
 
@@ -33,6 +29,7 @@ class FilmographyFragment : Fragment() {
     private val personProfessionKeyList = PersonProfessionKeyList().personProfessionKeyList
     private val getPersonProfessionName = GetPersonProfessionName()
     private val fragmentsList = mutableListOf<PersonMovieListFragment>()
+    private val databaseViewModel = App.appComponent.databaseViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,39 +54,27 @@ class FilmographyFragment : Fragment() {
 
     private fun loadFilmography() {
 
-        val dialog = Dialog(requireContext())
-        val dialogBinding = DialogLoadingBinding.inflate(layoutInflater)
-        dialog.setContentView(dialogBinding.root)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setCanceledOnTouchOutside(false)
-        dialog.setCancelable(false)
-
         val person = mainViewModel.person.value
         viewLifecycleOwner.lifecycleScope.launch {
-            binding.tabLayout.visibility = View.GONE
-            dialog.show()
             if (person != null) {
                 binding.personName.text = person.nameRu ?: person.nameEn ?: "Неизвестно"
                 filmographyVM.getFilmography(person)
             }
             val professionMap = filmographyVM.filmography.value
+            fragmentsList.clear()
             if (professionMap != null && fragmentsList.isEmpty()) {
                 binding.filmographyInformation.visibility = View.VISIBLE
                 binding.noConnectionLayout.visibility = View.GONE
+                fragmentsList.clear()
                 personProfessionKeyList.forEach {
                     getSortedMovieList(it, professionMap)
                 }
-                val activity = activity
-                if (fragmentsList.isNotEmpty() && activity != null) {
-                    val adapter = VPAdapter(activity, fragmentsList)
+                if (fragmentsList.isNotEmpty()) {
+                    val adapter = VPAdapter(requireActivity(), fragmentsList)
                     binding.filmography.adapter = adapter
-                    TabLayoutMediator(binding.tabLayout, binding.filmography) { tabItem, position ->
-                        tabItem.text = getString(
-                            R.string.name_number,
-                            fragmentsList[position].name,
-                            fragmentsList[position].movieNumber
-                        )
+                    TabLayoutMediator(binding.tabLayout, binding.filmography) { _, _ ->
                     }.attach()
+
                     for (i in 0 until fragmentsList.size) {
                         val tabItemBinding = TabItemBinding.inflate(layoutInflater)
                         tabItemBinding.number.text = fragmentsList[i].movieNumber.toString()
@@ -101,14 +86,12 @@ class FilmographyFragment : Fragment() {
                     binding.noConnectionLayout.visibility = View.VISIBLE
                 }
             }
-            binding.tabLayout.visibility = View.VISIBLE
-            dialog.dismiss()
         }
     }
 
     private fun getSortedMovieList(
         personProfessionKey: PersonProfessionKey,
-        professionMap: Map<String, List<Movie>>
+        professionMap: Map<String, List<PersonMovie>>
     ) {
         val movieList = professionMap[personProfessionKey.key]
         if (movieList != null && movieList.isNotEmpty()) {
@@ -116,10 +99,11 @@ class FilmographyFragment : Fragment() {
                 requireContext(),
                 personProfessionKey.key
             )
-            fragmentsList.clear()
+
             fragmentsList.add(
                 PersonMovieListFragment.newInstance(
-                    movieList,
+                    filmographyVM.getPagingMovies(movieList),
+                    databaseViewModel.viewedMovies.value,
                     name,
                     movieList.size
                 ) { findNavController().navigate(R.id.action_filmographyFragment_to_moviePageFragment) })
@@ -127,7 +111,7 @@ class FilmographyFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 }

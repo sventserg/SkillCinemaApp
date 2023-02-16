@@ -58,14 +58,13 @@ class YearSelectorFragment(
         viewLifecycleOwner.lifecycleScope.launch {
             binding.yearSelector.selectedYear.collect {
                 selectedYear = it
-                Log.d("SELECTED_YEAR_FRAGMENT", "Selected year: $selectedYear")
             }
         }
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 
     companion object {

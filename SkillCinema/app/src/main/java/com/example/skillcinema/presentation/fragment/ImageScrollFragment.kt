@@ -31,6 +31,7 @@ class ImageScrollFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.pageName.init(galleryVM.currentListName.value){ activity?.onBackPressedDispatcher?.onBackPressed() }
         val pagedImages = galleryVM.currentPagedImages.value
         val adapter = ScrollablePagingImageAdapter()
         binding.viewPager.adapter = adapter
@@ -45,8 +46,10 @@ class ImageScrollFragment : Fragment() {
         }
         binding.viewPager.setCurrentItem(position, false)
     }
+
     override fun onDestroyView() {
-        super.onDestroyView()
+        binding.viewPager.adapter = null
         _binding = null
+        super.onDestroyView()
     }
 }

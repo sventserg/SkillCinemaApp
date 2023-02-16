@@ -15,7 +15,6 @@ class OnBoardingFragment(
     private var _binding: ViewPagerFragmentOnBoardingBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,8 +30,8 @@ class OnBoardingFragment(
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 
     companion object {

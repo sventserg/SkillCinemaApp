@@ -27,7 +27,6 @@ class MoviePageViewModel(
     private val _actors = MutableStateFlow<List<Staff>?>(null)
     val actors = _actors.asStateFlow()
 
-
     private val _workers = MutableStateFlow<List<Staff>?>(null)
     val workers = _workers.asStateFlow()
 
@@ -70,17 +69,12 @@ class MoviePageViewModel(
 
     private suspend fun loadMovieInformation(movie: Movie) {
         val movieID = movie.id()
-//        if (movieID != null) {
-//            _selectedMovie.value = loadMovieData.loadMovie(movieID)
         val movieStaff = loadMovieData.loadMovieStaff(movieID)
         if (movieStaff != null) {
             _actors.value = getFilteredStaff.getActors(movieStaff)
             _workers.value = getFilteredStaff.getWorkers(movieStaff)
         }
-        _gallery.value = loadMovieData.loadMovieImage(
-            movieID, page = 1,
-            MovieImageTypeImp.STILL
-        )?.imageList
+        loadMovieImages(movieID)
         _similarMovies.value = loadMovieData.loadSimilarMovies(movieID)?.movieList
 
         val movieImageTypeList = MovieImageTypeList().movieImageTypeList
@@ -95,12 +89,67 @@ class MoviePageViewModel(
         }
         _gallerySize.value = imageNumber
         _galleryTypeNumbers.value = galleryTypeNumbersMap
-//        }
     }
 
     private fun isItSeries(movie: Movie) {
         val type = movie.type
         _isItSeries.value = type == MOVIE_TYPE_TV_SERIES || type == MOVIE_TYPE_MINI_SERIES
+    }
+
+    private suspend fun loadMovieImages(movieID: Int) {
+        val imageList = mutableListOf<MovieImage>()
+        val imageStill = loadMovieData.loadMovieImage(movieID, 1, MovieImageTypeImp.STILL)
+        Log.d("MPViewModel", "STILL loaded, size:${imageStill?.imageList?.size}")
+        imageStill?.imageList?.forEach { imageList.add(it) }
+        if (imageList.size < 20) {
+            val imageShooting = loadMovieData.loadMovieImage(movieID, 1, MovieImageTypeImp.SHOOTING)
+            Log.d("MPViewModel", "SHOOTING loaded, size:${imageShooting?.imageList?.size}")
+            imageShooting?.imageList?.forEach { if (imageList.size < 20) imageList.add(it) }
+        }
+        if (imageList.size < 20) {
+            val imagePoster = loadMovieData.loadMovieImage(movieID, 1, MovieImageTypeImp.POSTER)
+            Log.d("MPViewModel", "POSTER loaded, size:${imagePoster?.imageList?.size}")
+            imagePoster?.imageList?.forEach { if (imageList.size < 20)  imageList.add(it) }
+        }
+
+        if (imageList.size < 20) {
+            val imageFanArt = loadMovieData.loadMovieImage(movieID, 1, MovieImageTypeImp.FAN_ART)
+            Log.d("MPViewModel", "FAN_ART loaded, size:${imageFanArt?.imageList?.size}")
+            imageFanArt?.imageList?.forEach { if (imageList.size < 20)  imageList.add(it) }
+        }
+
+        if (imageList.size < 20) {
+            val imagePromo = loadMovieData.loadMovieImage(movieID, 1, MovieImageTypeImp.PROMO)
+            Log.d("MPViewModel", "PROMO loaded, size:${imagePromo?.imageList?.size}")
+            imagePromo?.imageList?.forEach { if (imageList.size < 20)  imageList.add(it) }
+        }
+
+        if (imageList.size < 20) {
+            val imageConcept = loadMovieData.loadMovieImage(movieID, 1, MovieImageTypeImp.CONCEPT)
+            Log.d("MPViewModel", "CONCEPT loaded, size:${imageConcept?.imageList?.size}")
+            imageConcept?.imageList?.forEach { if (imageList.size < 20)  imageList.add(it) }
+        }
+
+        if (imageList.size < 20) {
+            val imageWallpaper =
+                loadMovieData.loadMovieImage(movieID, 1, MovieImageTypeImp.WALLPAPER)
+            Log.d("MPViewModel", "WALLPAPER loaded, size:${imageWallpaper?.imageList?.size}")
+            imageWallpaper?.imageList?.forEach { if (imageList.size < 20)  imageList.add(it) }
+        }
+
+        if (imageList.size < 20) {
+            val imageCover = loadMovieData.loadMovieImage(movieID, 1, MovieImageTypeImp.COVER)
+            Log.d("MPViewModel", "COVER loaded, size:${imageCover?.imageList?.size}")
+            imageCover?.imageList?.forEach { if (imageList.size < 20)  imageList.add(it) }
+        }
+
+        if (imageList.size < 20) {
+            val imageScreenshot =
+                loadMovieData.loadMovieImage(movieID, 1, MovieImageTypeImp.SCREENSHOT)
+            Log.d("MPViewModel", "SCREENSHOT loaded, size:${imageScreenshot?.imageList?.size}")
+            imageScreenshot?.imageList?.forEach { if (imageList.size < 20)  imageList.add(it) }
+        }
+        _gallery.value = imageList
     }
 
     private suspend fun loadSeasons(movie: Movie) {

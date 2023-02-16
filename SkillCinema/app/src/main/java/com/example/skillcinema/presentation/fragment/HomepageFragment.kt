@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,9 +21,8 @@ import com.example.skillcinema.entity.Country
 import com.example.skillcinema.entity.Genre
 import com.example.skillcinema.entity.Movie
 import com.example.skillcinema.presentation.*
-import com.example.skillcinema.presentation.decorator.HorizontalItemDecoration
 import com.example.skillcinema.presentation.adapter.movieList.MovieListAdapter
-import kotlinx.coroutines.delay
+import com.example.skillcinema.presentation.decorator.HorizontalItemDecoration
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -75,10 +73,8 @@ class HomepageFragment : Fragment() {
             homepageViewModel.secondFilteredMovies.value == emptyList<Movie>()
         ) {
             binding.noConnectionLayout.visibility = View.VISIBLE
-//            binding.allInformation.visibility = View.GONE
         } else {
             binding.noConnectionLayout.visibility = View.GONE
-//            binding.allInformation.visibility = View.VISIBLE
         }
     }
 
@@ -92,6 +88,7 @@ class HomepageFragment : Fragment() {
             decoration
         )
         checkIsInformationLoaded()
+        startPostponedEnterTransition()
     }
 
     private fun refresh() {
@@ -192,7 +189,8 @@ class HomepageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        binding.allInformation.visibility = View.GONE
+        postponeEnterTransition()
+        binding.allInformation.visibility = View.INVISIBLE
 
         val margin = (resources.displayMetrics.scaledDensity * START_END_MARGIN).toInt()
         val spacing = (resources.displayMetrics.scaledDensity * DEFAULT_SPACING).toInt()
@@ -206,21 +204,22 @@ class HomepageFragment : Fragment() {
         val dialogBinding = DialogLoadingBinding.inflate(layoutInflater)
         dialog.setContentView(dialogBinding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setCanceledOnTouchOutside(false)
+//        dialog.setCanceledOnTouchOutside(false)
         dialog.setCancelable(false)
 
         homepageViewModel.isMovieListsLoaded.onEach {
             if (it) {
-                delay(250)
                 dialog.dismiss()
                 binding.allInformation.visibility = View.VISIBLE
             } else {
                 dialog.show()
-                binding.allInformation.visibility = View.GONE
+                binding.allInformation.visibility = View.INVISIBLE
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-        viewLifecycleOwner.lifecycleScope.launch { loadInformation(itemDecoration) }
+        viewLifecycleOwner.lifecycleScope.launch {
+            loadInformation(itemDecoration)
+        }
 
         binding.swipeRefresh.setOnRefreshListener {
             binding.swipeRefresh.isRefreshing = false
@@ -228,8 +227,9 @@ class HomepageFragment : Fragment() {
         }
     }
 
+
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 }

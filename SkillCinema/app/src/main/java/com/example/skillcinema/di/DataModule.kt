@@ -41,12 +41,6 @@ class DataModule(
 
     @Singleton
     @Provides
-    fun provideLoadMovieImageRepositoryImp(): LoadMovieImageRepositoryImp {
-        return LoadMovieImageRepositoryImp()
-    }
-
-    @Singleton
-    @Provides
     fun provideLoadSeasonsRepositoryImp(): LoadSeasonsRepositoryImp {
         return LoadSeasonsRepositoryImp()
     }

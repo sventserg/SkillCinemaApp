@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primaryColor">#42a5f5</color>
-    <color name="primaryLightColor">#80d6ff</color>
-    <color name="primaryDarkColor">#0077c2</color>
-    <color name="secondaryColor">#26c6da</color>
-    <color name="secondaryLightColor">#6ff9ff</color>
-    <color name="secondaryDarkColor">#0095a8</color>
+    <color name="primaryColor">#3e3bff</color>
+    <color name="primaryLightColor">#8469ff</color>
+    <color name="primaryDarkColor">#000cca</color>
+    <color name="secondaryColor">#8c78ff</color>
+    <color name="secondaryLightColor">#c1a7ff</color>
+    <color name="secondaryDarkColor">#564ccb</color>
     <color name="primaryTextColor">#272727</color>
     <color name="secondaryTextColor">#838390</color>
     <color name="selectedTextColor">#FFFFFF</color>
@@ -25,17 +25,10 @@
     <color name="mp_gradient_color_3">#663D3BFF</color>
     <color name="on_boarding_indicator_not_selected_color">#D9D9D9</color>
     <color name="on_boarding_indicator_selected_color">#121616</color>
+    <color name="black_white_color">#000000</color>
 
     <color name="slider_active_color">#3D3BFF</color>
     <color name="slider_inactive_color">#838390</color>
     <color name="slider_thumb_color">#FFFFFF</color>
-
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
 
 </resources>

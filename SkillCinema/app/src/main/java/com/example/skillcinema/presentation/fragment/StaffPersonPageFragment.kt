@@ -71,7 +71,7 @@ class StaffPersonPageFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        postponeEnterTransition()
         val margin = (resources.displayMetrics.scaledDensity * START_END_MARGIN).toInt()
         val spacing = (resources.displayMetrics.scaledDensity * DEFAULT_SPACING).toInt()
         binding.bestMovies.addDecoration(HorizontalItemDecoration(margin, spacing))
@@ -80,7 +80,7 @@ class StaffPersonPageFragment : Fragment() {
         }
 
         loadStaffPersonInformation()
-
+        startPostponedEnterTransition()
         binding.swipeRefresh.setOnRefreshListener {
             binding.swipeRefresh.isRefreshing = false
             loadStaffPersonInformation()
@@ -88,8 +88,8 @@ class StaffPersonPageFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 
     private fun loadStaffPersonInformation() {
@@ -98,7 +98,7 @@ class StaffPersonPageFragment : Fragment() {
         val dialogBinding = DialogLoadingBinding.inflate(layoutInflater)
         dialog.setContentView(dialogBinding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setCanceledOnTouchOutside(false)
+//        dialog.setCanceledOnTouchOutside(false)
         dialog.setCancelable(false)
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -121,7 +121,7 @@ class StaffPersonPageFragment : Fragment() {
                     clickOnFilmography(person)
                 })
 
-                val personName = person.nameRu ?: person.nameEn ?: ""
+                val personName = person.name()
                 binding.personName.text = personName
                 binding.personRole.text = person.profession
                 binding.allMoviesText.text = personVM.moviesQuantity.value

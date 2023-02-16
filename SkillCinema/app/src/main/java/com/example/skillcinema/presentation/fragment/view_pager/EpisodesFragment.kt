@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.skillcinema.databinding.ViewPagerFragmentEpisodesBinding
 import com.example.skillcinema.entity.Episode
+import com.example.skillcinema.presentation.DEFAULT_SPACING
+import com.example.skillcinema.presentation.START_END_MARGIN
 import com.example.skillcinema.presentation.decorator.SimpleVerticalItemDecoration
 import com.example.skillcinema.presentation.adapter.episode.EpisodeAdapter
 
@@ -27,9 +29,13 @@ class EpisodesFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val margin = (resources.displayMetrics.scaledDensity * START_END_MARGIN).toInt()
+        val spacing = (resources.displayMetrics.scaledDensity * DEFAULT_SPACING).toInt()
+
         val adapter = EpisodeAdapter(episodesList, requireContext())
         binding.episodesContainer.adapter = adapter
-        binding.episodesContainer.addItemDecoration(SimpleVerticalItemDecoration(40))
+        binding.episodesContainer.addItemDecoration(SimpleVerticalItemDecoration(spacing, margin))
     }
 
     companion object {
@@ -37,7 +43,7 @@ class EpisodesFragment(
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 }

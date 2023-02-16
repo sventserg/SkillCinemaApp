@@ -54,8 +54,8 @@ class SearchUseCase(
             ratingTo, yearFrom, yearTo, keyword, page
         )
     }
-
-    suspend fun searchPersonByName(name: String, page: Int): PersonByNameList? {
-        return repository.searchPersonByName(name, page)
-    }
+//
+//    suspend fun searchPersonByName(name: String, page: Int): PersonByNameList? {
+//        return repository.searchPersonByName(name, page)
+//    }
 }

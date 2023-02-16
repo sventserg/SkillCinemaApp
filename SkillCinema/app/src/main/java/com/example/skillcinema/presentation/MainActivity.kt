@@ -1,6 +1,7 @@
 package com.example.skillcinema.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import com.example.skillcinema.App
@@ -17,10 +18,12 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.activity_nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-
+        val graph = navController.navInflater.inflate(R.navigation.activity_nav_graph)
         if (!databaseViewModel.isOnBoardingNeeded()) {
-            navController.navigate(R.id.action_onBoardingPageFragment_to_mainFragment2)
-        }
+            graph.setStartDestination(R.id.onBoardingPageFragment)
+        } else
+            graph.setStartDestination(R.id.mainFragment2)
 
+        navController.graph = graph
     }
 }

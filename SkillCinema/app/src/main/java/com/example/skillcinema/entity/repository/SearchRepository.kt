@@ -30,5 +30,5 @@ interface SearchRepository {
         yearTo: Int, keyword: String, page: Int
     ): MovieList?
 
-    suspend fun searchPersonByName(name: String, page: Int): PersonByNameList?
+//    suspend fun searchPersonByName(name: String, page: Int): PersonByNameList?
 }

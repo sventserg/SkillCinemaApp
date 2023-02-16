@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/onBoardingImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:src="@drawable/on_boarding_image_1"
         app:layout_constraintBottom_toTopOf="@+id/descriptionText"
         app:layout_constraintDimensionRatio="w,1:1"
@@ -24,12 +24,12 @@
         android:layout_height="wrap_content"
         android:paddingStart="26dp"
         android:paddingEnd="26dp"
+        android:paddingBottom="20dp"
         android:text="@string/on_boarding_text_1"
         android:textColor="@color/primaryTextColor"
         android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/onBoardingImage" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

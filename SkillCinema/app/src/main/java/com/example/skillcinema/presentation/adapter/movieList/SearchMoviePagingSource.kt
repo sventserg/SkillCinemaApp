@@ -28,10 +28,6 @@ class SearchMoviePagingSource(
         }.fold(
             onSuccess = {
                 if (it != null) {
-                    Log.d(
-                        "PAGING_SOURCE_LOAD",
-                        "Viewed movies: ${checkIsViewed(it).size}, Movies: ${it.size}"
-                    )
                     LoadResult.Page(
                         data = checkIsViewed(it),
                         prevKey = null,
@@ -101,7 +97,6 @@ class SearchMoviePagingSource(
                 }
                 if (match) newMovieList.add(movie)
                 match = false
-                Log.d("PAGING_SOURCE_TRUE", "Movie list: ${movieList.size}, new movie list: ${newMovieList.size}")
             }
         } else {
             var match = true
@@ -109,7 +104,6 @@ class SearchMoviePagingSource(
                 viewedMovies.forEach { if (it.id() == movie.id()) match = false }
                 if (match) newMovieList.add(movie)
                 match = true
-                Log.d("PAGING_SOURCE_FALSE", "Movie list: ${movieList.size}, new movie list: ${newMovieList.size}")
             }
         }
         return newMovieList

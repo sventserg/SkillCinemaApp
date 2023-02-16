@@ -26,6 +26,7 @@ class MovieListPageFragment : Fragment() {
     private val binding get() = _binding!!
     private val mainViewModel = App.appComponent.mainViewModel()
     private val movieListPageVM = App.appComponent.movieListPageVM()
+    private val databaseViewModel = App.appComponent.databaseViewModel()
 
     private fun onClickMovie(movie: Movie?) {
         if (movie != null) {
@@ -48,7 +49,7 @@ class MovieListPageFragment : Fragment() {
             (resources.displayMetrics.scaledDensity * MOVIE_LIST_PAGE_SPACING).toInt()
         val verticalSpacing = (resources.displayMetrics.scaledDensity * DEFAULT_SPACING).toInt()
 
-        val adapter = PagingMovieListAdapter { onClickMovie(it) }
+        val adapter = PagingMovieListAdapter (databaseViewModel.viewedMovies.value) { onClickMovie(it) }
         binding.moviesList.adapter = adapter.withLoadStateFooter(MovieLoadStateAdapter())
         binding.moviesList.addItemDecoration(
             VerticalItemDecorationTwoColumn(
@@ -92,7 +93,7 @@ class MovieListPageFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 }

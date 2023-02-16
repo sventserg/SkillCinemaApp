@@ -10,8 +10,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.skillcinema.App
 import com.example.skillcinema.R
 import com.example.skillcinema.databinding.FragmentOnBoardingPageBinding
+import com.example.skillcinema.presentation.adapter.viewPager.ViewPagerFragmentAdapter
 import com.example.skillcinema.presentation.fragment.view_pager.OnBoardingFragment
-import com.example.skillcinema.presentation.adapter.viewPager.ImageVPAdapter
 
 
 class OnBoardingPageFragment : Fragment() {
@@ -20,7 +20,13 @@ class OnBoardingPageFragment : Fragment() {
     private val binding get() = _binding!!
     private val fragmentList = mutableListOf<OnBoardingFragment>()
     private val databaseViewModel = App.appComponent.databaseViewModel()
-
+    private val indicatorListener = object :
+        ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            currentIndicator(position)
+        }
+    }
     private fun start() {
         databaseViewModel.onBoardingIsOver()
         findNavController().navigate(R.id.action_onBoardingPageFragment_to_mainFragment2)
@@ -52,18 +58,9 @@ class OnBoardingPageFragment : Fragment() {
             binding.viewPager.setCurrentItem(2, true)
         }
 
-        val activity = activity
-        if (activity != null && fragmentList.isNotEmpty()) {
-            val adapter = ImageVPAdapter(activity, fragmentList)
-            binding.viewPager.adapter = adapter
-            binding.viewPager.registerOnPageChangeCallback(object :
-                ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    currentIndicator(position)
-                }
-            }
-            )
+        if (fragmentList.isNotEmpty()) {
+            binding.viewPager.adapter = ViewPagerFragmentAdapter(this, fragmentList)
+            binding.viewPager.registerOnPageChangeCallback(indicatorListener)
         }
         binding.startButton.setOnClickListener { start() }
         binding.skip.setOnClickListener { start() }
@@ -88,8 +85,12 @@ class OnBoardingPageFragment : Fragment() {
             }
         }
     }
+
+
     override fun onDestroyView() {
-        super.onDestroyView()
+        binding.viewPager.adapter = null
+        binding.viewPager.unregisterOnPageChangeCallback(indicatorListener)
         _binding = null
+        super.onDestroyView()
     }
 }

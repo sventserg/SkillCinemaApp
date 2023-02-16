@@ -1,9 +1,9 @@
 package com.example.skillcinema.presentation.adapter.movieList
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat.getDrawable
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.skillcinema.R
@@ -51,7 +51,6 @@ class MovieListAdapter(
         }
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = list[position]
 
@@ -60,15 +59,18 @@ class MovieListAdapter(
                 if (item is Movie) {
 
                     val res = holder.binding.gradient.resources
+                    var isItemInViewed = false
 
                     viewedMovies?.forEach {
                         if (it.id() == item.id()) {
+                            isItemInViewed = true
+                        }
+                        if (isItemInViewed) {
                             holder.binding.watchedIcon.visibility = View.VISIBLE
-                            holder.binding.gradient.background =
-                                res.getDrawable(R.drawable.movie_gradient, null)
+                            holder.binding.gradient.background =getDrawable(res, R.drawable.movie_gradient, null)
                         } else {
-//                            holder.binding.watchedIcon.visibility = View.GONE
-//                            holder.binding.gradient.background = null
+                            holder.binding.watchedIcon.visibility = View.GONE
+                            holder.binding.gradient.background = null
                         }
                     }
                     Glide

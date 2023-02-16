@@ -13,6 +13,14 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
+        <item name="android:windowEnableSplitTouch">false</item>
+        <item name="android:splitMotionEvents">false</item>
+    </style>
+
+    <style name="Theme.SkillCinema.TransparentActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
 </resources>

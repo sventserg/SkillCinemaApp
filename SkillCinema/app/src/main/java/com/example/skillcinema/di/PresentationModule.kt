@@ -66,9 +66,9 @@ class PresentationModule {
     @Provides
     @Singleton
     fun provideGalleryVM(
-        loadMovieImage: LoadMovieImageUseCase
+        loadMovieData: LoadMovieDataUseCase
     ): GalleryViewModel {
-        return GalleryViewModel(loadMovieImage)
+        return GalleryViewModel(loadMovieData)
     }
 
     @Provides

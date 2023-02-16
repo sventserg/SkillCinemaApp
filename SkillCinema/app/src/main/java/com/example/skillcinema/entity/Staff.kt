@@ -10,4 +10,5 @@ interface Staff {
     val professionKey: String
 
     fun profession(): StaffProfessionKey
+    fun name(): String
 }

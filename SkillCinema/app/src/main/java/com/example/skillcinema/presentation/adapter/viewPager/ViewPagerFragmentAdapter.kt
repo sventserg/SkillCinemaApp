@@ -1,17 +1,16 @@
 package com.example.skillcinema.presentation.adapter.viewPager
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class PagedVPAdapter(fa: FragmentActivity) :
-    FragmentStateAdapter(fa) {
+class ViewPagerFragmentAdapter(fragment: Fragment, private val fragmentList: List<Fragment>) :
+    FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return fragmentList.size
     }
 
     override fun createFragment(position: Int): Fragment {
-        TODO("Not yet implemented")
+        return fragmentList[position]
     }
 
 }

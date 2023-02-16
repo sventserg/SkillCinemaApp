@@ -78,9 +78,28 @@ class SearchPageViewModel(
     }
 
     private val keyword = MutableStateFlow("")
-    fun setKeyword(word: String) {
+    fun setKeyword(word: String, viewedMovies: List<Movie>) {
         keyword.value = word
-        Log.d("ViewModel", "Keyword: $keyword")
+        _pagedSearchList.value = Pager(
+            config = pagingConfig,
+            pagingSourceFactory = {
+                SearchMoviePagingSource(
+                    search = search,
+                    countries = countryID,
+                    genres = genreID,
+                    order = _order.value,
+                    type = _type.value,
+                    ratingFrom = _ratingFrom.value,
+                    ratingTo = _ratingTo.value,
+                    yearFrom = _yearFrom.value,
+                    yearTo = _yearTo.value,
+                    keyword = keyword.value,
+                    viewedMovies = viewedMovies,
+                    isViewed = _isViewed.value
+                )
+            }
+        ).flow.cachedIn(viewModelScope)
+        Log.d("ViewModel", "Keyword: ${keyword.value}")
     }
 
     private val _isViewed = MutableStateFlow(false)
@@ -94,6 +113,9 @@ class SearchPageViewModel(
         pageSize = 10,
         enablePlaceholders = true
     )
+
+    private val _pagedSearchList = MutableStateFlow<Flow<PagingData<Movie>>?>(null)
+    val pagedSearchList = _pagedSearchList.asStateFlow()
 
     fun getPagedList(viewedMovies: List<Movie>): Flow<PagingData<Movie>> {
         return Pager(

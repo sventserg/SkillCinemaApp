@@ -23,13 +23,13 @@ import com.example.skillcinema.databinding.FragmentUserProfilePageBinding
 import com.example.skillcinema.entity.Movie
 import com.example.skillcinema.entity.database.DBUserMovieList
 import com.example.skillcinema.presentation.DEFAULT_SPACING
-import com.example.skillcinema.presentation.START_END_MARGIN
+import com.example.skillcinema.presentation.EXPANDING_SPACING
 import com.example.skillcinema.presentation.MovieCollectionType
+import com.example.skillcinema.presentation.START_END_MARGIN
 import com.example.skillcinema.presentation.adapter.collection.CollectionAdapter
-import com.example.skillcinema.presentation.decorator.HorizontalItemDecoration
 import com.example.skillcinema.presentation.adapter.movieList.MovieListAdapter
+import com.example.skillcinema.presentation.decorator.HorizontalItemDecoration
 import com.example.skillcinema.presentation.decorator.VerticalItemDecoration
-import com.example.skillcinema.presentation.decorator.VerticalItemDecorationTwoColumn
 import kotlinx.coroutines.launch
 import kotlin.math.min
 
@@ -104,12 +104,13 @@ class UserProfilePageFragment : Fragment() {
 
         val margin = (resources.displayMetrics.scaledDensity * START_END_MARGIN).toInt()
         val spacing = (resources.displayMetrics.scaledDensity * DEFAULT_SPACING).toInt()
+        val expandingSpacing = (resources.displayMetrics.scaledDensity * EXPANDING_SPACING).toInt()
 
         //Add decoration
         val decoration = HorizontalItemDecoration(margin, spacing)
         binding.viewedMovies.addDecoration(decoration)
         binding.interestedMovies.addDecoration(decoration)
-        binding.collections.addItemDecoration(VerticalItemDecoration(spacing,spacing,margin))
+        binding.collections.addItemDecoration(VerticalItemDecoration(expandingSpacing,expandingSpacing,margin))
 
         //Add new collection dialog
         val dialogNewCollectionBinding = DialogNewCollectionBinding.inflate(layoutInflater)
@@ -167,20 +168,24 @@ class UserProfilePageFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             databaseViewModel.viewedMovies.collect { movies ->
                 val size = min(movies.size, 20)
-                val movieList = mutableListOf<Movie>()
-                for (i in 0 until size) {
-                    movieList.add(movies[i])
-                }
-                val viewedMoviesAdapter = MovieListAdapter(
-                    movieList,
-                    clearHistory = movies.isNotEmpty(),
-                    onClick = { onClickMovie(it) },
-                    lastElementClick = { onClickClearStory(VIEWED_MOVIES_NAME) })
+                if (size == 0) {
+                    binding.viewedMovies.visibility = View.GONE
+                } else {
+                    val movieList = mutableListOf<Movie>()
+                    for (i in 0 until size) {
+                        movieList.add(movies[i])
+                    }
+                    val viewedMoviesAdapter = MovieListAdapter(
+                        movieList,
+                        clearHistory = movies.isNotEmpty(),
+                        onClick = { onClickMovie(it) },
+                        lastElementClick = { onClickClearStory(VIEWED_MOVIES_NAME) })
 
-                binding.viewedMovies.initView(
-                    adapter = viewedMoviesAdapter,
-                    onForwardButtonClick = { onClickAllButton(movies, VIEWED_MOVIES_NAME) }
-                )
+                    binding.viewedMovies.initView(
+                        adapter = viewedMoviesAdapter,
+                        onForwardButtonClick = { onClickAllButton(movies, VIEWED_MOVIES_NAME) }
+                    )
+                }
             }
         }
 
@@ -188,24 +193,29 @@ class UserProfilePageFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             databaseViewModel.interestedMovies.collect { movies ->
                 val size = min(movies.size, 20)
-                val movieList = mutableListOf<Movie>()
-                for (i in 0 until size) {
-                    movieList.add(movies[i])
+                if (size == 0) {
+                    binding.interestedMovies.visibility = View.GONE
+                } else {
+                    val movieList = mutableListOf<Movie>()
+                    for (i in 0 until size) {
+                        movieList.add(movies[i])
+                    }
+                    val interestedMoviesAdapter = MovieListAdapter(
+                        movieList,
+                        clearHistory = movies.isNotEmpty(),
+                        onClick = { onClickMovie(it) },
+                        lastElementClick = { onClickClearStory(INTERESTED_MOVIES_NAME) })
+                    binding.interestedMovies.initView(
+                        adapter = interestedMoviesAdapter,
+                        onForwardButtonClick = { onClickAllButton(movies, INTERESTED_MOVIES_NAME) }
+                    )
                 }
-                val interestedMoviesAdapter = MovieListAdapter(
-                    movieList,
-                    clearHistory = movies.isNotEmpty(),
-                    onClick = { onClickMovie(it) },
-                    lastElementClick = { onClickClearStory(INTERESTED_MOVIES_NAME) })
-                binding.interestedMovies.initView(
-                    adapter = interestedMoviesAdapter,
-                    onForwardButtonClick = { onClickAllButton(movies, INTERESTED_MOVIES_NAME) }
-                )
             }
         }
     }
+
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 }

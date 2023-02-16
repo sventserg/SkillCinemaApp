@@ -12,7 +12,7 @@ class MovieImageAdapter(
     private val clickOnImage: (MovieImage) -> Unit
 ) : RecyclerView.Adapter<MovieImageViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieImageViewHolder {
-        val binding = ItemMoviePageGalleryImageBinding.inflate(LayoutInflater.from(parent.context))
+        val binding = ItemMoviePageGalleryImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MovieImageViewHolder(binding)
     }
 

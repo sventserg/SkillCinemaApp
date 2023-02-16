@@ -53,18 +53,6 @@ class DomainModule {
         return LoadPersonUseCase(LoadPersonRepositoryImp())
     }
 
-//    @Singleton
-//    @Provides
-//    fun provideMovieRatingSorter(): MovieRatingSorter {
-//        return MovieRatingSorter()
-//    }
-
-    @Singleton
-    @Provides
-    fun provideMovieImage(): LoadMovieImageUseCase {
-        return LoadMovieImageUseCase(LoadMovieImageRepositoryImp())
-    }
-
     @Singleton
     @Provides
     fun provideGetSortedMovieList(): GetSortedMovieListUseCase {
