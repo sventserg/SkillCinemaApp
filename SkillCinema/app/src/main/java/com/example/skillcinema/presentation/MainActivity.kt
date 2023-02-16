@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.activity_nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         val graph = navController.navInflater.inflate(R.navigation.activity_nav_graph)
-        if (!databaseViewModel.isOnBoardingNeeded()) {
+        if (databaseViewModel.isOnBoardingNeeded()) {
             graph.setStartDestination(R.id.onBoardingPageFragment)
         } else
             graph.setStartDestination(R.id.mainFragment2)
