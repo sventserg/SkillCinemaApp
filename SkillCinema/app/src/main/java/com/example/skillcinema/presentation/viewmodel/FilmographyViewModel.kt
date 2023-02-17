@@ -30,14 +30,14 @@ class FilmographyViewModel(
         enablePlaceholders = true
     )
 
-    suspend fun getFilmography(person: Person) {
+    fun getFilmography(person: Person) {
         val personMovieList = person.films
         val map = mutableMapOf<String, List<PersonMovie>>()
 
         personProfessionKeyList.forEach {
-            map[it.key] = getSortedMovieList.getSortedMovieList(personMovieList, it)
+            val movieList = getSortedMovieList.getSortedMovieList(personMovieList, it)
+            if (movieList.isNotEmpty()) map[it.key] = movieList
         }
-
         _filmography.value = map
     }
 

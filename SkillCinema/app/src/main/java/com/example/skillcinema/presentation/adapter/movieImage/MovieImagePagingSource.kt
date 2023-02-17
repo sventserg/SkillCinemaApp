@@ -20,7 +20,7 @@ class MovieImagePagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieImage> {
         val page = params.key ?: 1
         return kotlin.runCatching {
-            loadMovieData.loadMovieImageForPaging(kinopoiskId, page, type)
+                loadMovieData.loadMovieImageForPaging(kinopoiskId, page, type)
         }.fold(
             onSuccess = {
                 Log.d("Source", "Success ${it?.imageList?.size}")

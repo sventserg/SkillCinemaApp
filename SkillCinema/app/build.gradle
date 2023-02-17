@@ -14,8 +14,8 @@ android {
         applicationId "com.example.skillcinema"
         minSdk 24
         targetSdk 33
-        versionCode 2
-        versionName "1.1"
+        versionCode 3
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -76,7 +76,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
 
     // debugImplementation because LeakCanary should only run in debug builds.
-//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.10'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.10'
 
 
     testImplementation 'junit:junit:4.13.2'

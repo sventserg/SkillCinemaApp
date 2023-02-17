@@ -25,10 +25,14 @@ class PersonDto(
     @Json(name = RESPONSE_PARAMETER_FILMS) override val films: List<PersonMovieDto>
 ) : Person {
     override fun name(): String {
-        var name = ""
+        var name = NO_NAME
         if (nameRu != null && nameRu.isNotEmpty()) name = nameRu else {
             if (nameEn != null && nameEn.isNotEmpty()) name = nameEn
         }
         return name
+    }
+
+    companion object {
+        private const val NO_NAME = "Имя неизветно"
     }
 }

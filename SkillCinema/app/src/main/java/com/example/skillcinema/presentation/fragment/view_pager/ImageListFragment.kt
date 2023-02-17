@@ -6,10 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.*
 import com.example.skillcinema.App
+import com.example.skillcinema.R
+import com.example.skillcinema.data.GetMovieImageTypeRuName
 import com.example.skillcinema.databinding.ViewPagerFragmentImageListBinding
 import com.example.skillcinema.entity.MovieImage
+import com.example.skillcinema.entity.MovieImageType
 import com.example.skillcinema.presentation.adapter.movieImage.PagingMovieImageAdapter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
@@ -17,29 +21,25 @@ import kotlinx.coroutines.flow.onEach
 
 
 class ImageListFragment(
-    private val pagingImages: Flow<PagingData<MovieImage>>,
-    val name: String,
-    val imagesNumber: Int,
-    val navigate: () -> Unit
+    val type: MovieImageType
 ) : Fragment() {
 
     private var _binding: ViewPagerFragmentImageListBinding? = null
     private val binding get() = _binding!!
     private val galleryVM = App.appComponent.galleryVM()
+    private val getMovieImageTypeName = GetMovieImageTypeRuName()
 
-    private var adapter = PagingMovieImageAdapter {
-        onImageClick(it, pagingImages)
-    }
 
-    private fun onImageClick(image: MovieImage?, pagedImages: Flow<PagingData<MovieImage>>) {
+    private fun onImageClick(image: MovieImage?, pagedImages: Flow<PagingData<MovieImage>>?) {
         galleryVM.setImage(image)
         galleryVM.setCurrentPagedImages(pagedImages)
-        galleryVM.setCurrentListName(name)
-        navigate()
-    }
-
-    private fun refreshAdapter() {
-        this.adapter.refresh()
+        galleryVM.setCurrentListName(
+            getMovieImageTypeName.getMovieImageTypeRuName(
+                requireContext(),
+                type
+            )
+        )
+        findNavController().navigate(R.id.action_galleryFragment_to_imageScrollFragment)
     }
 
     override fun onCreateView(
@@ -53,15 +53,15 @@ class ImageListFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        binding.galleryContainer.adapter = adapter
-
-        binding.noConnectionButton.setOnClickListener {
-            refreshAdapter()
+        val pagingImages = galleryVM.pagedImages(type)
+        val adapter = PagingMovieImageAdapter {
+            onImageClick(it, pagingImages)
         }
 
-        pagingImages.onEach {
+        binding.galleryContainer.adapter = adapter
+        pagingImages?.onEach {
             adapter.submitData(it)
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+        }?.launchIn(viewLifecycleOwner.lifecycleScope)
 
         adapter.loadStateFlow.onEach {
             if (it.refresh != LoadState.Loading) {
@@ -71,6 +71,9 @@ class ImageListFragment(
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
 
+        binding.noConnectionButton.setOnClickListener {
+            adapter.refresh()
+        }
     }
 
     override fun onDestroyView() {
@@ -81,10 +84,7 @@ class ImageListFragment(
 
     companion object {
         fun newInstance(
-            pagingImages: Flow<PagingData<MovieImage>>,
-            name: String,
-            imagesNumber: Int,
-            navigate: () -> Unit
-        ) = ImageListFragment(pagingImages, name, imagesNumber, navigate)
+            type: MovieImageType
+        ) = ImageListFragment(type)
     }
 }

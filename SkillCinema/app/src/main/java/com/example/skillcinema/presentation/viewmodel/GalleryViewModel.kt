@@ -31,10 +31,15 @@ class GalleryViewModel(
         _image.value = image
     }
 
+    private val currentMovie = MutableStateFlow<Int?>(null)
+    fun setCurrentMovie(id: Int) {
+        currentMovie.value = id
+    }
+
     private val _currentPagedImages = MutableStateFlow<Flow<PagingData<MovieImage>>?>(null)
     val currentPagedImages = _currentPagedImages.asStateFlow()
 
-    fun setCurrentPagedImages(pagedImages: Flow<PagingData<MovieImage>>) {
+    fun setCurrentPagedImages(pagedImages: Flow<PagingData<MovieImage>>?) {
         _currentPagedImages.value = pagedImages
     }
 
@@ -46,20 +51,22 @@ class GalleryViewModel(
     }
 
     fun pagedImages(
-        kinopoiskId: Int,
         type: MovieImageType
-    ): Flow<PagingData<MovieImage>> {
-        return Pager(
-            config = pagingConfig,
-            initialKey = null,
-            pagingSourceFactory = {
-                MovieImagePagingSource(
-                    loadMovieData = loadMovieData,
-                    kinopoiskId = kinopoiskId,
-                    type = type
-                )
-            }
-        ).flow.cachedIn(viewModelScope)
+    ): Flow<PagingData<MovieImage>>? {
+        val id = currentMovie.value
+        return if (id != null)
+            Pager(
+                config = pagingConfig,
+                initialKey = null,
+                pagingSourceFactory = {
+                    MovieImagePagingSource(
+                        loadMovieData = loadMovieData,
+                        kinopoiskId = id,
+                        type = type
+                    )
+                }
+            ).flow.cachedIn(viewModelScope)
+        else null
     }
 
 }

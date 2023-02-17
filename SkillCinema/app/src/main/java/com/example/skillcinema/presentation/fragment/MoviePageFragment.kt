@@ -2,7 +2,6 @@ package com.example.skillcinema.presentation.fragment
 
 import android.animation.LayoutTransition
 import android.animation.LayoutTransition.TransitionListener
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -10,9 +9,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -40,7 +36,6 @@ import com.google.android.material.appbar.AppBarLayout
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.math.abs
 
 class MoviePageFragment : Fragment() {
 
@@ -54,6 +49,10 @@ class MoviePageFragment : Fragment() {
     private var currentAnimationState = IDLE_ANIMATION_STATE
     private fun isRunning(): Boolean {
         return currentAnimationState != IDLE_ANIMATION_STATE
+    }
+    var preDrawListener: ViewTreeObserver.OnPreDrawListener? = ViewTreeObserver.OnPreDrawListener {
+        _binding?.scrollView?.scrollTo(0, 0)
+        true
     }
 
     override fun onCreateView(
@@ -142,12 +141,17 @@ class MoviePageFragment : Fragment() {
 
     }
 
+    override fun onStop() {
+        binding.appBarLayout.viewTreeObserver.removeOnPreDrawListener(preDrawListener)
+        super.onStop()
+    }
+
     override fun onDestroyView() {
         binding.appBarLayout.removeOnOffsetChangedListener(appBarStateChangeListener)
         _binding = null
-        super.onDestroyView()
         activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         activity?.window?.statusBarColor = resources.getColor(R.color.primaryDarkColor, null)
+        super.onDestroyView()
     }
 
     private fun onClickMovie(movie: Movie) {
@@ -524,26 +528,22 @@ class MoviePageFragment : Fragment() {
 
     private fun createAppBarStateChangeListener(): AppBarStateChangeListener {
         return object : AppBarStateChangeListener() {
-            val darkMagick = ViewTreeObserver.OnPreDrawListener {
-                _binding?.scrollView?.scrollTo(0, 0)
-                true
-            }
 
             override fun onStateChanged(appBarLayout: AppBarLayout?, state: State?) {
                 when (state) {
                     State.EXPANDED -> {
-                        binding.appBarLayout.viewTreeObserver.addOnPreDrawListener(darkMagick)
+                        binding.appBarLayout.viewTreeObserver.addOnPreDrawListener(preDrawListener)
                         binding.actionToolbar.navigationIcon = getDrawable(requireContext(), R.drawable.back_icon)
                         binding.toolbar.title = NO_TITLE
                     }
 
                     State.IDLE -> {
-                        binding.appBarLayout.viewTreeObserver.removeOnPreDrawListener(darkMagick)
+                        binding.appBarLayout.viewTreeObserver.removeOnPreDrawListener(preDrawListener)
                         binding.actionToolbar.navigationIcon = getDrawable(requireContext(), R.drawable.back_icon)
                         binding.toolbar.title = NO_TITLE
                     }
                     else -> {
-                        binding.appBarLayout.viewTreeObserver.removeOnPreDrawListener(darkMagick)
+                        binding.appBarLayout.viewTreeObserver.removeOnPreDrawListener(preDrawListener)
                         binding.actionToolbar.navigationIcon = getDrawable(requireContext(), R.drawable.back_icon_white)
                         binding.toolbar.title = mainViewModel.selectedMovie.value?.name()
                     }

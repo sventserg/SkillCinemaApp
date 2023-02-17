@@ -27,6 +27,7 @@ class OnBoardingPageFragment : Fragment() {
             currentIndicator(position)
         }
     }
+
     private fun start() {
         databaseViewModel.onBoardingIsOver()
         findNavController().navigate(R.id.action_onBoardingPageFragment_to_mainFragment2)
@@ -59,7 +60,11 @@ class OnBoardingPageFragment : Fragment() {
         }
 
         if (fragmentList.isNotEmpty()) {
-            binding.viewPager.adapter = ViewPagerFragmentAdapter(this, fragmentList)
+            binding.viewPager.adapter = ViewPagerFragmentAdapter(
+                childFragmentManager,
+                viewLifecycleOwner.lifecycle,
+                fragmentList
+            )
             binding.viewPager.registerOnPageChangeCallback(indicatorListener)
         }
         binding.startButton.setOnClickListener { start() }
@@ -90,6 +95,7 @@ class OnBoardingPageFragment : Fragment() {
     override fun onDestroyView() {
         binding.viewPager.adapter = null
         binding.viewPager.unregisterOnPageChangeCallback(indicatorListener)
+        fragmentList.clear()
         _binding = null
         super.onDestroyView()
     }

@@ -43,6 +43,7 @@ class EpisodesFragment(
     }
 
     override fun onDestroyView() {
+//        binding.episodesContainer.adapter = null
         _binding = null
         super.onDestroyView()
     }

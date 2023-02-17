@@ -175,7 +175,8 @@
         tools:layout="@layout/fragment_search_filter" >
         <action
             android:id="@+id/action_searchFilterFragment_to_searchSettingsFragment"
-            app:destination="@id/searchSettingsFragment" />
+            app:destination="@id/searchSettingsFragment"
+            app:popUpTo="@id/searchSettingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/setTimePeriodFragment"
@@ -184,7 +185,8 @@
         tools:layout="@layout/fragment_time_filter" >
         <action
             android:id="@+id/action_setTimePeriodFragment_to_searchSettingsFragment"
-            app:destination="@id/searchSettingsFragment" />
+            app:destination="@id/searchSettingsFragment"
+            app:popUpTo="@id/searchSettingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/imageScrollFragment"

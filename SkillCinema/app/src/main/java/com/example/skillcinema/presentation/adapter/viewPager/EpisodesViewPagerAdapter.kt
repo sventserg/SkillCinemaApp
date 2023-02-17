@@ -4,15 +4,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.skillcinema.entity.Season
+import com.example.skillcinema.presentation.fragment.view_pager.EpisodesFragment
 
-class ViewPagerFragmentAdapter(fm: FragmentManager, lifecycle: Lifecycle, private val fragmentList: List<Fragment>) :
+class EpisodesViewPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle, private val seasons: List<Season>) :
     FragmentStateAdapter(fm, lifecycle) {
+
     override fun getItemCount(): Int {
-        return fragmentList.size
+        return seasons.size
     }
 
     override fun createFragment(position: Int): Fragment {
-        return fragmentList[position]
+        return EpisodesFragment(seasons[position].episodes)
     }
-
 }

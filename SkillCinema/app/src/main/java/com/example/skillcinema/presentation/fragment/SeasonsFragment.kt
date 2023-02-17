@@ -1,16 +1,15 @@
 package com.example.skillcinema.presentation.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.skillcinema.App
 import com.example.skillcinema.R
 import com.example.skillcinema.databinding.FragmentSeasonsBinding
 import com.example.skillcinema.databinding.TabItemBinding
-import com.example.skillcinema.presentation.fragment.view_pager.EpisodesFragment
-import com.example.skillcinema.presentation.adapter.viewPager.VPAdapter
+import com.example.skillcinema.presentation.adapter.viewPager.EpisodesViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
 
@@ -19,7 +18,7 @@ class SeasonsFragment : Fragment() {
     private var _binding: FragmentSeasonsBinding? = null
     private val binding get() = _binding!!
     private val mainViewModel = App.appComponent.mainViewModel()
-    private val fragmentList = mutableListOf<EpisodesFragment>()
+    private var mediator: TabLayoutMediator? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +44,8 @@ class SeasonsFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        mediator?.detach()
+        mediator = null
         binding.episodesContainer.adapter = null
         _binding = null
         super.onDestroyView()
@@ -55,32 +56,21 @@ class SeasonsFragment : Fragment() {
         binding.episodesNumber.text = mainViewModel.episodesNumber.value
         if (seasons != null) {
             binding.seasonsInformation.visibility = View.VISIBLE
-            binding.noConnectionLayout.visibility = View.GONE
-            fragmentList.clear()
-            seasons.forEach {
-                fragmentList.add(EpisodesFragment.newInstance(it.episodes))
+            val adapter = EpisodesViewPagerAdapter(childFragmentManager, viewLifecycleOwner.lifecycle, seasons)
+            binding.episodesContainer.adapter = adapter
+            mediator = TabLayoutMediator(
+                binding.tabLayout,
+                binding.episodesContainer
+            ) { _, _ ->
             }
-            if (fragmentList.isNotEmpty()) {
-
-                val adapter = VPAdapter(requireActivity(), fragmentList)
-                binding.episodesContainer.adapter = adapter
-                TabLayoutMediator(
-                    binding.tabLayout,
-                    binding.episodesContainer
-                ) { tabItem, position ->
-                    tabItem.text = (position+1).toString()
-                }.attach()
-                for (i in 0 until fragmentList.size) {
-                    val tabItemBinding = TabItemBinding.inflate(layoutInflater)
-                    tabItemBinding.text.text =
-                        resources.getString(R.string.number_of_season, seasons[i].number)
-                    tabItemBinding.number.visibility = View.GONE
-                    binding.tabLayout.getTabAt(i)?.customView = tabItemBinding.root
-                }
+            mediator?.attach()
+            for (i in seasons.indices) {
+                val tabItemBinding = TabItemBinding.inflate(layoutInflater)
+                tabItemBinding.text.text =
+                    resources.getString(R.string.number_of_season, seasons[i].number)
+                tabItemBinding.number.visibility = View.GONE
+                binding.tabLayout.getTabAt(i)?.customView = tabItemBinding.root
             }
-        } else {
-            binding.seasonsInformation.visibility = View.GONE
-            binding.noConnectionLayout.visibility = View.VISIBLE
         }
     }
 }

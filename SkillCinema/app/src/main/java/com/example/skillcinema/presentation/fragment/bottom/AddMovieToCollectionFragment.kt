@@ -1,6 +1,5 @@
 package com.example.skillcinema.presentation.fragment.bottom
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -8,19 +7,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.view.WindowManager
 import androidx.core.content.res.ResourcesCompat.getDrawable
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.skillcinema.R
 import com.example.skillcinema.databinding.BottomFragmentAddMovieBinding
-import com.example.skillcinema.databinding.DialogErrorBinding
 import com.example.skillcinema.databinding.DialogNewCollectionBinding
 import com.example.skillcinema.entity.Movie
-import com.example.skillcinema.presentation.viewmodel.DatabaseViewModel
 import com.example.skillcinema.presentation.adapter.addMovieToCollection.AddMovieToCollectionAdapter
 import com.example.skillcinema.presentation.decorator.HorizontalDividerDecoration
+import com.example.skillcinema.presentation.viewmodel.DatabaseViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
