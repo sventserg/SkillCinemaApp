@@ -64,7 +64,7 @@ open class MovieDto(
         val filmLengthString = if (lengthString.contains(":")) {
             lengthString.substring(0, 2) + "ч " + lengthString.substring(3) + "мин"
         } else if (lengthString != "") {
-            "${lengthString.toInt() / 60}ч + ${lengthString.toInt() % 60}мин"
+            "${lengthString.toInt() / 60}ч ${lengthString.toInt() % 60}мин"
         } else {
             ""
         }

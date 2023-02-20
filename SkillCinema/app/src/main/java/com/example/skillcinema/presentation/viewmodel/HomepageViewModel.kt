@@ -111,14 +111,14 @@ class HomepageViewModel(
             val secondGenre = _secondGenreFilter.value
             if (firstCountry != null && firstGenre != null) {
                 _firstFilteredMovieListName.value =
-                    "${firstGenre.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }}  ${firstCountry.name}"
+                    "${firstGenre.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }} ${firstCountry.name}"
                 val firstResult =
                     loadMovieList.loadFilteredMovies(firstCountry, firstGenre, 1)?.movieList
                 if (firstResult != null) _firstFilteredMovies.value = firstResult
             }
             if (secondCountry != null && secondGenre != null) {
                 _secondFilteredMovieListName.value =
-                    "${secondGenre.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }}  ${secondCountry.name}"
+                    "${secondGenre.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }} ${secondCountry.name}"
                 val secondResult =
                     loadMovieList.loadFilteredMovies(secondCountry, secondGenre, 1)?.movieList
                 if (secondResult != null) _secondFilteredMovies.value = secondResult

@@ -17,7 +17,7 @@ class ScrollablePagingImageAdapter() :
 
         Glide
             .with(holder.binding.root)
-            .load(item?.previewUrl)
+            .load(item?.imageUrl)
             .fitCenter()
             .into(holder.binding.container)
     }

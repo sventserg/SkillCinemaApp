@@ -1,6 +1,8 @@
 package com.example.skillcinema.data
 
-const val KINOPOISK_API_KEY = "X-API-KEY: ce5dc7dd-ae8d-48d2-bd34-38b658615bd0"
+import com.example.skillcinema.BuildConfig
+
+const val KINOPOISK_API_KEY = BuildConfig.KINOPOISK_API_KEY
 const val KINOPOISK_API_BASE_URL = "https://kinopoiskapiunofficial.tech"
 
 const val GET_PREMIERES_PATH = "/api/v2.2/films/premieres"
